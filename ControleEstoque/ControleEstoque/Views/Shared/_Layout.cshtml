@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-login">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -80,15 +80,20 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li>@Html.ActionLink("Sobre", "Sobre", "Home")</li>
                         @*Com essa propriedade a baixo você faz o apontamente do nome de usuário*@
-                        <li><a href="#">Olá @User.Identity.Name </a></li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Olá @User.Identity.Name
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
+                            {
+                                <li><a href="javascript:document.getElementById('logoffForm').submit()">Sair</a></li>
 
-                        @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
-                        {
-                            <li><a href="javascript:document.getElementById('logoffForm').submit()">Sair</a></li>
-                                                     
+                            }
+                        </ul>
+                    </li>                     
 
-                        
-                        }
                     </ul>
 
                 }
