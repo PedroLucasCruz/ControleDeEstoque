@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-login">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -88,8 +88,9 @@
                         <ul class="dropdown-menu">
                             @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
                             {
+                                <ul class="nav navbar-nav navbar-static-top glyphicon-text-color">
                                 <li><a href="javascript:document.getElementById('logoffForm').submit()">Sair</a></li>
-
+                                </ul>    
                             }
                         </ul>
                     </li>                     
