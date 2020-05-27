@@ -47,7 +47,7 @@ namespace ControleEstoque.Controllers
             ViewBag.Returnurl = ReturnUrl;
             return View();
         }
-
+        
         [HttpPost]
         public ActionResult Login(LoginViewModel login, String returnUrl) 
         {
@@ -62,7 +62,8 @@ namespace ControleEstoque.Controllers
             //Nessa validação abaixo é posto uma condicional para saber se o usuario
             //Foi encontrado na base de dados ficticia
             //Variavel tipada de acordo com o retorno
-            var achou = (login.Usuario == "Pedro" && login.Senha == "123");
+            // var achou = (login.Usuario == "Pedro" && login.Senha == "123");
+            var achou = UsuarioModel.ValidarUsuario(login.Usuario, login.Senha);
 
             if (achou)
             {
@@ -79,6 +80,7 @@ namespace ControleEstoque.Controllers
                 }
                 else
                 {
+                    //RedirectToAction redireciona o fluxo para o action Index dentro do controller Home
                     RedirectToAction("Index", "Home");
                 }
             }
@@ -88,7 +90,6 @@ namespace ControleEstoque.Controllers
             {
                 ModelState.AddModelError("", "Login inválido.");
             }
-
             return View(login);       
         }
 

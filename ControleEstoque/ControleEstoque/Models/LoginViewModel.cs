@@ -7,8 +7,7 @@ using System.Web;
 namespace ControleEstoque.Models
 {
     public class LoginViewModel
-    {
-        
+    {        
         [Required(ErrorMessage ="Informe um usuário válido")] //Definido que o campo não pode ficarm em branco se não mostra a msg
         [Display(Name = "Usuario: ")] //Aqui você definiu o nome do campo que será exibiado em tela "Usuario"
         public String Usuario { get; set; }
