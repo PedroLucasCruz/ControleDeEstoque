@@ -14,12 +14,14 @@ namespace ControleEstoque.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult PerdaMes()
         {
             return View();
         }
 
-        public ActionResult EntradaSaidasMes()
+        [Authorize]
+        public ActionResult EntradaSaidaMes()
         {
             return View();
         }
