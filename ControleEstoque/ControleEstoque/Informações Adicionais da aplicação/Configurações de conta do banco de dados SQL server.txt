@@ -1,0 +1,21 @@
+Criando e configurando um novo login no SQL
+
+OBS: Estas configurações tem em vista que o SQL server Management Studio já foi instalado. 
+
+0 - Faça login com a conta de autenticação windows
+1 - No lado esquerdo do programa expanda o DESTKTOP e selecione Security(segurança)
+2 - Você pode clicar com o botão diretio do mouse em Security ou Logins e selecionar new login(novo login) 
+3 - Será aberto uma tela de configurações
+4 - Selecione SQL Server authentication  
+5 - Defina um usuário e uma senha para o SQL
+6 - Desmarque as caixas de exigencia de mudança de senha, Enforce password, Enforce password policy
+7 - Você pode definir uma base de dados default para o usuário no penultimo campo descrito como Default database.
+8 - Apos finalizar essas configações de login e senha, no canto esquerdo desta mesma janela selecione Server Roles
+9 - Deixe selecionado as opções de Public e Sysadmin
+10 - Em User mapping, você consegue ver todas as permissões atribuidas para o usuário, mas não sera possivel fazer nenhuma alteração se você não estiver logado com a conta de autenticação windows para criar o novo login
+10.1 - ainda em User mapping selecione o banco de configuração, vc pode selecionar tudo que o usuário terá acesso.
+10.2 clique no botão representado por (...) no final da linha do grid, em seguida será aberto uma nova janela
+10.3 Nessa nova janela(select Schema), clique no botão Browse..., aqui você pode selecionar os acessos de esquema que o usuário terá acesso, por padrão você pode selecionar apenas [db.owner] ou pode selecionar todos dependendo da situação, apos configurar clique em Ok em todas as telas.
+11 - Selecione Securables, nesta janela você vai configurar as permissões de execução no banco de dados 
+11.1 selecione Search, selecione a opção do servidor que seria a ultima, clique em ok e você verá se será carregado dados de acesso, de acordo com a necessidade selecione o que o usuário terá permissão de fazer no banco de dados.
+12 - Clique em Ok apos finalizar as configurações.

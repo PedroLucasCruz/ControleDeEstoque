@@ -27,7 +27,7 @@ namespace ControleEstoque.Models
             //String completa fica da seguinte forma a baixo
             //"Dara Source=localhost;Initial Catalog=controle-estoque; User id=admin;Passaword=123";
             #endregion
-            conexao.ConnectionString = "Dara Source=localhost;Initial Catalog=controle-estoque;User Id=admin;Passaword=123";
+            conexao.ConnectionString = @"Data Source=DESKTOP-5U7PVKK;Initial Catalog=controle_estoque;User Id=Controleestoque;Password=controle55";
             #region
             //Abrir a conexão com o banco de dados por padrão toda vez que for usada na aplicação
             #endregion
@@ -47,7 +47,7 @@ namespace ControleEstoque.Models
             //String format pegar as variaveis definidas nos campos com '{}' e alinha o que vc digitar sequencialmente
             //Nessa linha você retorna o a quantidade de linhas encontradas no banco de dados de acordo com os parametros informados
             #endregion
-            comando.CommandText = string.Format("Select * count(*) from Usuario where login '{0}' and senha '{1}'", Login, Senha);
+            comando.CommandText = string.Format("Select count(*) from Usuario where Login like '{0}' and Senha like '{1}'", Login, Senha);
 
             #region
             //Quando você precisa retornar valor você utilizar o ExecuteScalar que está dentro do comando

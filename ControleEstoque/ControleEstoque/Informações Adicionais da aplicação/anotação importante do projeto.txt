@@ -1,0 +1,87 @@
+
+Para sistema de controle de estoque
+
+Produto parado é perca de dinheiro, então é importante voce vender os produtos ou itens 
+pereciveis que vão vencer primeiro, assim voce evita gasto de dinheiro desnecessário
+
+No sistema podera haver uma funcionalidade que filtre produtos que vão vencer primeiro
+Então pelo banco de dados voce consegue organizar os dados para mostrar tudo que podera
+vencer primeiro e ordenar esses itens por demanta de aquisição dos seus clientes, ou seja
+
+>> Critérios para classificar produtos para uma venda
+
+1 - O que vai vencer 
+2 - necessidade de aquisiçao do cliente
+
+Como saber qual o produto que tem maior aquisição pelo cliente para colocar ele na fila de 
+prioridade para uma venda? 
+Você usara como base estrategica seus produtos mais vendidos. 
+
+>> Tipos de produtos em que o sistema pode atender a necessidade
+
+1 - de materia prima, como madeiras, ou itens para joalherias ou materiais de contrução
+2 - Produtos não acabados, Motores de carro, processadores, peças de lentes, tarraça de violão
+3 - Produtos finalizado, carros, computadores, violões
+4 - Consumiveis, conbustivel, canetas, papel
+
+Controle de estoque controla a entrada, controle interno e saida. 
+
+Estratégia para mostrar para o cliente as vantagens de se ter um sistema que o ajude 
+
+Com o controle de estoque você vai conseguir identificar os seguintes pontos no seu negocio
+- Bater as contas no final do mes 
+- Calcular seus lucros com base nas saidas ou vendas
+- Identificar as perdas na sua empresa ou durante as vendas 
+- Contribuir para o governo (ICMS - Imposto sobre circulação de mercado e serviço e transporte) 
+
+Cuidados
+
+O negocio do cliente nunca pode ter produto em falta, para isso, pode ser desenvolvido uma funcionalidade
+de notificação que flexibilize para o cliente ou usuário saber se o produto está proximo de estar em falta
+Você pode desenvolver uma tela que receba parametros de forma geral ou por produto para indentificar com base na
+necessidade de aquisição qual o ponto que o estoque de determinado produto atinja para que vc tenha que repor este
+produto definido como aviso.
+
+Da mesma forma que não pode faltar produto e o sistema tem que notifica quando estiver acabando
+O sistema também deve identificar quando tiver produto em estoque exagerado para que seja adotado 
+uma estratégia de venda para este produtos como por exemplo colocalo em promoção, baseado em tipo de produto e a necessidade de sua aquisição, se for um tipo de produto perecivel que esteja come estoque exagerado o sistem tem que coloca lo a frente(O sistem que de saber quando o estoque está exagerado com base na media de aquisoções anteriores).
+
+Inventário periodo do estoque.
+
+Sobre a estrutura do sistema 
+
+É importante que o sistema tenha uma estrutura de gravação de log para saber em quais pontos o sistema pode ter 
+Tido falhas. Esses logs podem servir para ajudar o desenvolvedor na solução de problemas. 
+
+Auditoria dentro do sistema é importante para saber quais foram as ações tomadas pelo usuário, como um lançamento falso de um produto ou uma retirada desnecessária ou até uma perda dentro do estoque.
+
+Tecnologia de conexão ao banco de dados
+Base do ADO.net
+
+- Classes conectada a dados
+	
+- Classes desconectadas de dados
+
+metodos de uso da classe
+	- Connection (usado pra fazer a conexão com a fonte de dados)
+	- Transaction (Controle de transações)
+	- Command (para executar os comandos na fonte de dados)
+	- Parameter (Usado para passar o parametros pra fonte)
+	- DataReader (Usado quando vc quer recuperar dados da fonte)
+
+Data provider(Provedores de dados)
+
+	Implementa as classes de dados especifica para a fonte de dados
+	Ex: Sql data Provider (Conhecido com namespace de System.Data.sqlClient)
+	(é possivel utilizar com interfaces também)
+
+Classes do provedor de dados (Data provider)
+	- sqlConnection
+	- sqlTransction
+	- sqlCommand
+	- sqlParameter
+	- sqlDataReader
+
+
+
+

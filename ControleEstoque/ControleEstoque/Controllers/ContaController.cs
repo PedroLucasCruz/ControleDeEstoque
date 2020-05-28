@@ -69,6 +69,7 @@ namespace ControleEstoque.Controllers
             {
                 //Caso o usuário seja valido seta os parametro dentro da 
                 //sessão de cookies do authentication
+                //Se as informações digitadas pelo usuário estiverem Ok, seta nos cookies da aplicação
                 FormsAuthentication.SetAuthCookie(login.Usuario, login.LembrarMe);
 
                 //Nesse trecho você valida se a URL passado como parametro está 
@@ -102,6 +103,5 @@ namespace ControleEstoque.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index","Home");
         }
-
     }
 }
