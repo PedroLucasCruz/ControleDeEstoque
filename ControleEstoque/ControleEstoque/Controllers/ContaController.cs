@@ -25,7 +25,9 @@ namespace ControleEstoque.Controllers
 
         //<!---Você passa a url de login por parametro(~/Conta/Login) e da o nome da autenticação---->
         //Abaixo as linhas de código para inclusão no WebConfig
-        //<Authentication mode = "Forms" >
+        //<Authentication mode = "Forms">
+        //<!---aqui você configura a primera view a ser chamada quando o programa compilar--->
+        //<!---Para que a tela seje chamada é preciso uma view e uma controller que se correspondam----->
         //  < forms loginsUrl="~/Conta/Login" name=".controlestoque"></forms>
         //</Authentication>
         //<!---na linha abaixo ele nega para todos que não são autorizados---->

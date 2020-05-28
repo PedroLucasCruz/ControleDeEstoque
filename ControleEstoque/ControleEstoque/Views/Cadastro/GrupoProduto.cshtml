@@ -1,7 +1,73 @@
-﻿
+﻿@model List<ControleEstoque.Models.GrupoProdutoModel>
+
 @{
-    ViewBag.Title = "Grupo de produtos";
+    ViewBag.title = "Cadastro_de_grupo_de_produtos";
 }
 
-<h2>Grupo de produtos</h2>
+<div id="cadastro">
 
+    <section id="cadastro_cabeçalho">
+        <h1></h1>
+    </section>
+
+    <section id="cadastro_conteudo">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    
+                    <div id="cabecalho_grid" class="row">
+                        <div class="col-md-12">
+                            <a id="btn_incluir" class="btn btn-success" role="button">
+                                <i class="glyphicon glyhphicon-plus">
+                                    Adicionar 
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="grid cadastro" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Ativo</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*para que você consigar ler esse tipo de dados com foreach ou qualquer laço de repetição
+                                        você tem que importar o Model em formato de lista como mostra o exemplo abaixo
+                                        @model List<ControleEstoque.Models.GrupoProdutoModel>
+                                    *@
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <th> @item.Nome</th>
+                                            <th>
+                                                @{
+                                                    var ativo = (item.Ativo ? "SIM" : "NÃO");
+                                                }@ativo
+                                            </th>
+
+                                            <th>
+
+                                                <a class="btn btn-primary btn-alterar" role="button"> <i class="glyhphicon glyhphicon-pencil"> Alterar </i> </a>
+                                                <a class="btn btn-primary btn-excluir" role="button"> <i class="glyhphicon glyhphicon-trash"> Excluir </i> </a>
+                                            </th>
+                                        </tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>

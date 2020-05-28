@@ -33,7 +33,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Senha, new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Senha, new { @class = "form-control" })
+                        @Html.PasswordFor(m => m.Senha, new { @class = "form-control" })
 
                         @*Abaixo é usado o validate em conjunto com o authenticator*@
                         @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
