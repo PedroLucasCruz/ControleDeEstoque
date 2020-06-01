@@ -22,15 +22,42 @@ select,
 textarea {
     max-width: 280px;
 }
-
-.container-login
-{
+/*-----código acrecentado--------*/
+.container-login {
     width: 400px;
     margin: 0 auto;
 }
 
-.titulo
-{
-    margin-bottom:30px;
+.titulo {
+    margin-bottom: 30px;
     text-transform: uppercase;
+}
+
+#grid_cadastro > thead > tr th:nth-child(2) {
+    width: 110px;
+}
+
+#grid_cadastro > thead > tr th:nth-child(3) {
+    width: 210px;
+}
+
+#cadastro {
+    width: 70%;
+    margin: 0 auto;
+}
+
+#cadastro_cabecalho {
+    border-bottom: 1px #d7d7d7 solid;
+}
+
+#cadastro_conteudo {
+    margin-top: 20px;
+}
+
+#cabecalho_grid {
+    margin-bottom: 20px;
+}
+
+.invisivel{
+display: none;
 }

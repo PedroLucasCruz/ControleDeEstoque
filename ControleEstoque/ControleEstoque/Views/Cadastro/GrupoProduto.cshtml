@@ -6,68 +6,164 @@
 
 <div id="cadastro">
 
-    <section id="cadastro_cabeçalho">
-        <h1></h1>
+    <section id="cadastro_cabecalho">
+        <h1>Cadastro de Produtos</h1>
     </section>
 
     <section id="cadastro_conteudo">
+
+        <div id="cabecalho_grid" class="row">
+            <div class="col-md-12">
+                <a id="btn_incluir" class="btn btn-success" role="button">
+                    <i class="glyphicon glyhphicon-plus">
+                        Adicionar
+                    </i>
+                </a>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
-                <div class="box">
-                    
-                    <div id="cabecalho_grid" class="row">
-                        <div class="col-md-12">
-                            <a id="btn_incluir" class="btn btn-success" role="button">
-                                <i class="glyphicon glyhphicon-plus">
-                                    Adicionar 
-                                </i>
-                            </a>
-                        </div>
-                    </div>
+                <table id="grid_cadastro" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Ativo</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*para que você consigar ler esse tipo de dados com foreach ou qualquer laço de repetição
+                            você tem que importar o Model em formato de lista como mostra o exemplo abaixo
+                            @model List<ControleEstoque.Models.GrupoProdutoModel>
+                        *@
+                        @foreach (var item in Model)
+                        {
+                            <tr data-id="@item.Id">
+                                <td> @item.Nome</td>
+                                <td>
+                                    @{
+                                        var ativo = (item.Ativo ? "SIM" : "NÃO");
+                                    }@ativo
+                                </td>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table id="grid cadastro" class="table table-bordered table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>Ativo</th>
-                                        <th>Ação</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @*para que você consigar ler esse tipo de dados com foreach ou qualquer laço de repetição
-                                        você tem que importar o Model em formato de lista como mostra o exemplo abaixo
-                                        @model List<ControleEstoque.Models.GrupoProdutoModel>
-                                    *@
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <th> @item.Nome</th>
-                                            <th>
-                                                @{
-                                                    var ativo = (item.Ativo ? "SIM" : "NÃO");
-                                                }@ativo
-                                            </th>
+                                <td>
 
-                                            <th>
+                                    <a class="btn btn-primary btn-alterar" role="button"> <i class="glyphicon glyphicon-pencil"> Alterar </i> </a>
+                                    <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash"> Excluir </i> </a>
+                                </td>
+                            </tr>
+                        }
 
-                                                <a class="btn btn-primary btn-alterar" role="button"> <i class="glyhphicon glyhphicon-pencil"> Alterar </i> </a>
-                                                <a class="btn btn-primary btn-excluir" role="button"> <i class="glyhphicon glyhphicon-trash"> Excluir </i> </a>
-                                            </th>
-                                        </tr>
-                                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                                </tbody>
+    </section>
+</div>
 
-                            </table>
-                        </div>
-                    </div>
-
+<div id="modal_cadastro" class="form-horizontal invisivel" role="dialog">
+    <fieldset>
+        <div class="row">
+            <div class="form-group" >
+                <div class=".col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                @Html.Label("lbl_nome", "Nome", new { @class = "col-md-3 control-label" })
+                </div>
+                <div class=".col-sm-6 col-md-6 col-lg-9 col-xl-9">
+                    @Html.TextBox("txt_nome", null, new { @class = "form-control" })
                 </div>
             </div>
-
+            <div class="form-group" >
+                <div class=".col-sm-6 col-md-6 col-lg-3 col-xl-3" >
+                @Html.Label("lbl_ativo", "Ativo", new { @class = "col-md-3 control-label"})
+                </div>
+                <div class=".col-sm-6 col-md-6 col-lg-9 col-xl-9">
+                    @Html.CheckBox("cbx_ativo")
+                </div>
+            </div>
         </div>
-    </section>
-
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="modal-footer">
+                        <a id="btn_sair" class="btn btn-default" role="button" data-dismiss="modal"> <i class="glyphicon glyphicon-remove"> Sair </i> </a>
+                        <a id="btn_confirmar" class="btn btn-primary" role="button"> <i class="glyphicon glyphicon-ok"> salvar </i> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
 </div>
+
+
+@section Scripts{
+
+    @*<script src="~/Scripts/AcaoTabela.js"></script>*@
+
+<script>
+
+      function exibir_form(dados) {
+
+    //Aqui você pega toda a div marcado com Id="modal_cadastro"
+    //joga ela para um variavel tipada para ser usado mais adiante na execução
+    //
+    var modal = $('#modal_cadastro');
+
+    //aqui a função pega os valores passados como pametro e alimenta
+    //os campos da modal
+    $('#txt_nome').val(dados.Nome);
+    $('#cbx_ativo').prop('checked'.dados.Ativo);
+
+    //Esse função bootbox.dialog é o que permite o inicio da manipulação da caixa modal
+    //dentro da função dialog existe '{}' que representam os objetos para exibir no modal
+    //Title o titulo do modal
+    //Messagem é o objeto que será exibido
+    bootbox.dialog({
+        title: 'Teste',
+        message: modal
+    })
+        //Esta função é usada para exibir o modal, é uma função de dentro do doc
+        //do framework do modal(pacote instalado na aplicação)
+        .on('shown.bs.modal', function () {
+
+            //A função é chamado com referencia ao objeto modal setado no inicio da função
+            //Dentro da função show é usado as propriedades
+            modal.show(0, function () {
+                $('#txt_nome').focus()
+            });
+        })
+        .on('hidden.bs.modal', function () {
+            //Novamente esta sendo chamado uma função de dentro do modal
+            //A função hide ocula o item
+            //a função appendTo retira o item da modal e devolver para o corpo da pagina
+            modal.hide().appendTo('body');
+        });
+}
+
+
+$(document).on('click', '#btn_incluir', function () {
+
+    exibir_form({ Id: 0, Nome: '', Ativo: true });
+})
+    .on('click', '.btn-alterar', function () {
+        var btn = $(this),
+            id = btn.closest('tr').attr('data-id'),
+            url = '@Url.Action("RecuperarGrupoProduto","Cadastro")',
+            param = { 'id': id };
+
+        $.post(url, param, function (response) {
+            if (response) {
+                exibir_form(response)
+            }
+        });
+    })
+
+
+    .on('click', '.btn-excluir', function () {
+        alert('3');
+    })
+
+</script>
+
+}

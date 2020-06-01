@@ -44,6 +44,14 @@ namespace ControleEstoque.Controllers
             return View(ListaGrupoProduto);
         }
 
+        [HttpPost]
+        [Authorize]
+        public ActionResult RecuperarGrupoProduto(int id)
+        {
+            return Json(ListaGrupoProduto.Find(x => x.Id == id));
+        }
+
+
         [Authorize]
         public ActionResult MarcaProduto()
         {

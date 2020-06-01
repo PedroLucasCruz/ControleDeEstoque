@@ -146,10 +146,13 @@
     <Content Include="Informações Adicionais da aplicação\anotação importante do projeto.txt" />
     <Content Include="Informações Adicionais da aplicação\Configurações de conta do banco de dados SQL server.txt" />
     <Content Include="Informações Adicionais da aplicação\script para criar tabela de usuário.sql" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Informações Adicionais da aplicação\Aulas controle de estoque C#.pptx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\AcaoTabela.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />

@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - Controle de Estoque</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/BotoesTabelas")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -77,27 +78,29 @@
                             </ul>
                         </li>
                     </ul>
+
                     <ul class="nav navbar-nav navbar-right">
                         <li>@Html.ActionLink("Sobre", "Sobre", "Home")</li>
                         @*Com essa propriedade a baixo você faz o apontamente do nome de usuário*@
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Olá @User.Identity.Name
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
-                            {
-                                <ul class="nav navbar-nav navbar-static-top glyphicon-text-color">
-                                <li><a href="javascript:document.getElementById('logoffForm').submit()">Sair</a></li>
-                                </ul>    
-                            }
-                        </ul>
-                    </li>                     
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Olá @User.Identity.Name
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
+                                {
+                                    <ul class="nav navbar-nav navbar-static-top glyphicon-text-color">
+                                        <li><a href="javascript:document.getElementById('logoffForm').submit()">Sair</a></li>
+                                    </ul>
+
+                                }
+                            </ul>
+                        </li>
 
                     </ul>
-
                 }
+
                 else
                 {
                     <ul class="nav navbar-nav navbar-right">
@@ -120,6 +123,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+   
+
 
 </body>
 </html>
