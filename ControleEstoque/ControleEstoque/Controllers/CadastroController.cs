@@ -34,7 +34,7 @@ namespace ControleEstoque.Controllers
         public List<GrupoProdutoModel> ListaGrupoProduto = new List<GrupoProdutoModel>()
         {
             new GrupoProdutoModel(){Id=1,Nome = "Pera", Ativo = true },
-            new GrupoProdutoModel(){Id=2,Nome = "Melão", Ativo = true },
+            new GrupoProdutoModel(){Id=2,Nome = "Melão", Ativo = false },
             new GrupoProdutoModel(){Id=3,Nome = "Abacaxi", Ativo = true }
         };
 
@@ -49,6 +49,24 @@ namespace ControleEstoque.Controllers
         public ActionResult RecuperarGrupoProduto(int id)
         {
             return Json(ListaGrupoProduto.Find(x => x.Id == id));
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public bool ExcluirGrupoProduto(int id)
+        {
+            var Item = ListaGrupoProduto.Find(x => x.Id == id);
+       
+            if (Item != null)
+            {
+                ListaGrupoProduto.Remove(Item);
+                return true;    
+            }
+            else
+            {
+                return false;
+            }
         }
 
 

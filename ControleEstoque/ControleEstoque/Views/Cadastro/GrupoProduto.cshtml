@@ -66,17 +66,17 @@
 <div id="modal_cadastro" class="form-horizontal invisivel" role="dialog">
     <fieldset>
         <div class="row">
-            <div class="form-group" >
+            <div class="form-group">
                 <div class=".col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                @Html.Label("lbl_nome", "Nome", new { @class = "col-md-3 control-label" })
+                    @Html.Label("lbl_nome", "Nome", new { @class = "col-md-3 control-label" })
                 </div>
                 <div class=".col-sm-6 col-md-6 col-lg-9 col-xl-9">
                     @Html.TextBox("txt_nome", null, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="form-group" >
-                <div class=".col-sm-6 col-md-6 col-lg-3 col-xl-3" >
-                @Html.Label("lbl_ativo", "Ativo", new { @class = "col-md-3 control-label"})
+            <div class="form-group">
+                <div class=".col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    @Html.Label("lbl_ativo", "Ativo", new { @class = "col-md-3 control-label" })
                 </div>
                 <div class=".col-sm-6 col-md-6 col-lg-9 col-xl-9">
                     @Html.CheckBox("cbx_ativo")
@@ -112,8 +112,9 @@
 
     //aqui a função pega os valores passados como pametro e alimenta
     //os campos da modal
-    $('#txt_nome').val(dados.Nome);
-    $('#cbx_ativo').prop('checked'.dados.Ativo);
+          $('#txt_nome').val(dados.Nome);
+          $('#cbx_ativo').prop('checked', dados.Ativo);
+
 
     //Esse função bootbox.dialog é o que permite o inicio da manipulação da caixa modal
     //dentro da função dialog existe '{}' que representam os objetos para exibir no modal
@@ -139,15 +140,43 @@
             //a função appendTo retira o item da modal e devolver para o corpo da pagina
             modal.hide().appendTo('body');
         });
-}
+    }
+
+
+        function chamaDoPost(actionDeAcesso) {
+
+            $.post(url, param, function (response) {
+            if (response) {
+                exibir_form(response)
+            }
+        });
+
+    }
+
+    function chamadaDeParametroPost() {
+           id = btn.closest('tr').attr('data-id'),
+            url = '@Url.Action("RecuperarGrupoProduto","Cadastro")',
+            param = { 'id': id };
+        return [id, url, ]
+    }
 
 
 $(document).on('click', '#btn_incluir', function () {
 
-    exibir_form({ Id: 0, Nome: '', Ativo: true });
+    exibir_form({ Id: 0, Nome: '', Ativo: false });
 })
     .on('click', '.btn-alterar', function () {
+
+
+        //Var é a declaração de variaveis, e todas são separadas por virgula
         var btn = $(this),
+
+            //Dentro do seu grid tem um preenchimento de id de variavel
+            //Para acessar o id preenchido no grid com javascript
+            // a atribuição de 'btn' é um objeto jQuery com métodos que o jQuery disponibiliza
+            //Em seguida o Btn é acessado com closest para retornar o primeiro acesso de um elemento(o mais proximo)
+            //No caso abaixo é acessado o Tr como elemento ais proximo, e sem seguida é acessado o atributo com attr('data-id')
+            //Apos acessa o elemento mais proximo vc acessa seua atributo com attr('data-id')
             id = btn.closest('tr').attr('data-id'),
             url = '@Url.Action("RecuperarGrupoProduto","Cadastro")',
             param = { 'id': id };
@@ -159,9 +188,34 @@ $(document).on('click', '#btn_incluir', function () {
         });
     })
 
-
     .on('click', '.btn-excluir', function () {
-        alert('3');
+           var btn = $(this),
+            tr = btn.closest('tr'),
+            id = tr.attr('data-id'),
+            url = '@Url.Action("ExcluirGrupoProduto","Cadastro")',
+            param = { 'id': id };
+
+            bootbox.confirm({
+            size: "small",
+            message: "Are you sure?",
+            callback: function (result) {
+
+                if (result) {
+                    bootbox.alert("Item Excluido")
+
+                    $.post(url, param, function (response) {
+                        //Quando você encontrar a resposta o retorno do post ele executa a linha dentro do If
+                         if (response) {
+                             tr.remove();
+                        }
+                    });
+                }
+                else {
+                    bootbox.alert("Exclusão cancelada!");
+                }
+            /* result is a boolean; true = OK, false = Cancel*/
+            }
+        })
     })
 
 </script>

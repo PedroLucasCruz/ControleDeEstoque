@@ -8,7 +8,7 @@
     //aqui a função pega os valores passados como pametro e alimenta
     //os campos da modal
     $('#txt_nome').val(dados.Nome);
-    $('#cbx_ativo').prop('checked'.dados.Ativo);
+    $('#cbx_ativo').prop('checked', dados.Ativo);
 
     //Esse função bootbox.dialog é o que permite o inicio da manipulação da caixa modal
     //dentro da função dialog existe '{}' que representam os objetos para exibir no modal
