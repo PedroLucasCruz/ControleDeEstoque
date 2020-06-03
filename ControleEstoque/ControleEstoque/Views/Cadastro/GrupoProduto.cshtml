@@ -63,9 +63,12 @@
     </section>
 </div>
 
+
+@Html.Hidden("Id_cadastro")
 <div id="modal_cadastro" class="form-horizontal invisivel" role="dialog">
     <fieldset>
         <div class="row">
+
             <div class="form-group">
                 <div class=".col-sm-6 col-md-6 col-lg-3 col-xl-3">
                     @Html.Label("lbl_nome", "Nome", new { @class = "col-md-3 control-label" })
@@ -88,7 +91,7 @@
                 <div class="form-group">
                     <div class="modal-footer">
                         <a id="btn_sair" class="btn btn-default" role="button" data-dismiss="modal"> <i class="glyphicon glyphicon-remove"> Sair </i> </a>
-                        <a id="btn_confirmar" class="btn btn-primary" role="button"> <i class="glyphicon glyphicon-ok"> salvar </i> </a>
+                        <a id="btn_confirmar" class="btn btn-primary" role="button" > <i class="glyphicon glyphicon-ok"> salvar </i> </a>
                     </div>
                 </div>
             </div>
@@ -103,6 +106,23 @@
 
 <script>
 
+    //Essa função serve para criar a estrutura da tabela de uma linha a ser adicionada
+    function criar_linha_grid(dados) {
+
+        var retorno =
+            '<tr data-id=' + dados.Id + '>' +
+            '<td>' + dados.Nome + '</td>' +
+            '<td>' + (dados.Ativo ? 'SIM' : 'NÃO') + '</td>' +
+            '<td>' +
+            '<a class="btn btn-primary btn-alterar" role="button" style="margin-left: 3px";> <i class="glyphicon glyphicon-pencil"> Alterar </i> </a>' +
+            '<a class="btn btn-danger btn-excluir" role="button" > <i class="glyphicon glyphicon-trash"> Excluir </i> </a>' +
+            '</td>' +
+            '</tr>';
+
+        return retorno;
+        }
+
+
       function exibir_form(dados) {
 
     //Aqui você pega toda a div marcado com Id="modal_cadastro"
@@ -112,6 +132,7 @@
 
     //aqui a função pega os valores passados como pametro e alimenta
     //os campos da modal
+          $('#Id_cadastro').val(dados.id);
           $('#txt_nome').val(dados.Nome);
           $('#cbx_ativo').prop('checked', dados.Ativo);
 
@@ -150,7 +171,6 @@
                 exibir_form(response)
             }
         });
-
     }
 
     function chamadaDeParametroPost() {
@@ -161,63 +181,124 @@
     }
 
 
-$(document).on('click', '#btn_incluir', function () {
+    $(document).on('click', '#btn_incluir', function () {
 
-    exibir_form({ Id: 0, Nome: '', Ativo: false });
-})
-    .on('click', '.btn-alterar', function () {
-
-
-        //Var é a declaração de variaveis, e todas são separadas por virgula
-        var btn = $(this),
-
-            //Dentro do seu grid tem um preenchimento de id de variavel
-            //Para acessar o id preenchido no grid com javascript
-            // a atribuição de 'btn' é um objeto jQuery com métodos que o jQuery disponibiliza
-            //Em seguida o Btn é acessado com closest para retornar o primeiro acesso de um elemento(o mais proximo)
-            //No caso abaixo é acessado o Tr como elemento ais proximo, e sem seguida é acessado o atributo com attr('data-id')
-            //Apos acessa o elemento mais proximo vc acessa seua atributo com attr('data-id')
-            id = btn.closest('tr').attr('data-id'),
-            url = '@Url.Action("RecuperarGrupoProduto","Cadastro")',
-            param = { 'id': id };
-
-        $.post(url, param, function (response) {
-            if (response) {
-                exibir_form(response)
-            }
-        });
+        exibir_form({ Id: 0, Nome: '', Ativo: false });
     })
+        .on('click', '.btn-alterar', function () {
 
-    .on('click', '.btn-excluir', function () {
-           var btn = $(this),
-            tr = btn.closest('tr'),
-            id = tr.attr('data-id'),
-            url = '@Url.Action("ExcluirGrupoProduto","Cadastro")',
-            param = { 'id': id };
+
+            //Var é a declaração de variaveis, e todas são separadas por virgula
+            var btn = $(this),
+
+                //Dentro do seu grid tem um preenchimento de id de variavel
+                //Para acessar o id preenchido no grid com javascript
+                // a atribuição de 'btn' é um objeto jQuery com métodos que o jQuery disponibiliza
+                //Em seguida o Btn é acessado com closest para retornar o primeiro acesso de um elemento(o mais proximo)
+                //No caso abaixo é acessado o Tr como elemento ais proximo, e sem seguida é acessado o atributo com attr('data-id')
+                //Apos acessa o elemento mais proximo vc acessa seua atributo com attr('data-id')
+                id = btn.closest('tr').attr('data-id'),
+                url = '@Url.Action("RecuperarGrupoProduto","Cadastro")',
+                param = { 'id': id };
+
+            $.post(url, param, function (response) {
+                if (response) {
+                    exibir_form(response)
+                }
+            });
+        })
+
+        .on('click', '.btn-excluir', function () {
+            var btn = $(this),
+                tr = btn.closest('tr'),
+                id = tr.attr('data-id'),
+                url = '@Url.Action("ExcluirGrupoProduto","Cadastro")',
+                param = { 'id': id };
 
             bootbox.confirm({
-            size: "small",
-            message: "Are you sure?",
-            callback: function (result) {
+                size: "small",
+                message: "Are you sure?",
+                callback: function (result) {
+                    if (result) {
+                        bootbox.alert("Item Excluido")
 
-                if (result) {
-                    bootbox.alert("Item Excluido")
-
-                    $.post(url, param, function (response) {
-                        //Quando você encontrar a resposta o retorno do post ele executa a linha dentro do If
-                         if (response) {
-                             tr.remove();
-                        }
-                    });
+                        $.post(url, param, function (response) {
+                            //Quando você encontrar a resposta o retorno do post ele executa a linha dentro do If
+                            if (response) {
+                                tr.remove();
+                            }
+                        });
+                    }
+                    else {
+                        bootbox.alert("Exclusão cancelada!");
+                    }
+                    /* result is a boolean; true = OK, false = Cancel*/
                 }
-                else {
-                    bootbox.alert("Exclusão cancelada!");
-                }
-            /* result is a boolean; true = OK, false = Cancel*/
-            }
+            })
         })
-    })
+        //Este evento de botão é de dentro do modal, quando o usuário clicar no botão confirmar
+        .on('click', '#btn_confirmar', function () {
+                
+            //Nesta requisição é passado a Url do controller requisitado utilizando razor
+            //Seu tipo é definido com Post para enviar dos dados e retorno das informações
+            //
 
+            $.ajax({
+                url: '@Url.Action("SalvarGrupoProduto", "Cadastro")',
+                type: 'POST',
+                data: {
+                    Id: $('#id_cadastro').val(),
+                    Nome: $('#txt_nome').val(),
+                    Ativo: $('#cbx_ativo').prop('checked')
+                },
+                success: function (data) {
+                    //var response = $.parseJSON(data);
+             
+                    var table = $('#grid_cadastro').find('tbody');
+                    var linha = criar_linha_grid(data);
+                    table.append(linha);
+                   
+                }
+                
+            });
+          
+
+             @*var btn = $(this),
+                url = '@Url.Action("SalvarGrupoProduto","Cadastro")',
+                //param se tranforma em um objeto que será passado como parametro na requisição de post
+                //Dentro da construção de objetos estão:
+                //Id: que é preenchido com os dados do list assim que o modal é chamado, porém, seu valor é resgatado com
+                //como é visto abaixo para que seja usado de parametro quando for enviado a requisição post
+                //Nome: parametro nome é prenchido com chamado do modal e tem seu valor resgatado para usado como
+                //parametro para requisição post
+                //Ativo: assim como os parametro anteriores seu valor é trazido do list em tela, e preenchido na
+                //chamada do modal e quando é clicado no botão confirmar é enviado requisão psoto junto com outros valores
+                 param = {
+                     Id: $('#id_cadastro').val(),
+                     Nome: $('#txt_nome').val(),
+                     Ativo: $('#cbx_ativo').prop('checked')
+                };
+            //Neste metodo post é preenchido como parametro a url de requisição contendo
+            //Controller e a action a ser usada, e também o objeto parametro
+            //Caso haja sucesso
+            $.post(url, param, function (response) {
+                if (response) {
+                    if (param.id == 0) {
+                        ////Aqui você pega todo conteudo da tabela
+                        var table = $('#grid_cadastro').find('tbody');
+
+                        //esse metodo retornar a estrutura uma linha para ser adicionada com
+                        //base no response
+
+                        var linha = criar_linha_grid(response);
+                        //Aqui é adicionado o a linha dentro da tabela
+                        table.append(linha);
+                    }
+                }
+            });*@
+
+            $('#modal_cadastro').parents('bootbox').modal('hide');
+        });
 </script>
 
 }

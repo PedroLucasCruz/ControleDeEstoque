@@ -1,8 +1,10 @@
 ﻿using ControleEstoque.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace ControleEstoque.Controllers
@@ -31,7 +33,10 @@ namespace ControleEstoque.Controllers
         //para adicionar os objetos basta que eles estejam dentro das chaves da lista
         //no final das chaves da lista é importante colocar o ponto e virgula para que compile de acordo com a sintaxe
         #endregion
-        public List<GrupoProdutoModel> ListaGrupoProduto = new List<GrupoProdutoModel>()
+        //A lista em memoria deve estár statica para ser enxergadas por todas a aplicação
+        //Caso contrario qualquer execução que tenha a lista como envolvida terá que estanciar a lista
+        //novamente, sendo assim, os objetos da lista serão incluidos novamente dentro da lista.
+        public static List<GrupoProdutoModel> ListaGrupoProduto = new List<GrupoProdutoModel>()
         {
             new GrupoProdutoModel(){Id=1,Nome = "Pera", Ativo = true },
             new GrupoProdutoModel(){Id=2,Nome = "Melão", Ativo = false },
@@ -54,19 +59,68 @@ namespace ControleEstoque.Controllers
 
         [HttpPost]
         [Authorize]
-        public bool ExcluirGrupoProduto(int id)
+        public ActionResult ExcluirGrupoProduto(int id)
         {
+            //var resposta = false;
+
+            //Nesta linha de execução é passado pelo cliente(frontEnd) um Id como parametro
+            //Esse Id é usado como parametro para varrer a lista e então o metodo find retorna
+            //O item que foi encontrado dentro dessa lista
+            //Essa item passado como parametro pode ser ou não ser encotrado em uma busca
+            //Tendo em vista então que apos a busca o metodo find retornar de dentro da lista o
+            //O objeto encontrado, podendo este objeto ter mais de um atributo
+            //Apo esse retorno do valor, o objeto é gravado em uma variavel tipada e validado mais a baixo
             var Item = ListaGrupoProduto.Find(x => x.Id == id);
-       
+            //Validação para identificar se contem itens retornados            
             if (Item != null)
             {
+                //Esse metodo remove o objeto encontrado de dentro da lista
                 ListaGrupoProduto.Remove(Item);
-                return true;    
+                //resposta = true;
+            }
+            return Json(true);
+        }
+
+        public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)
+        {
+            //Nessa primeira linha é verificado se o registro já existe dentro da 
+            //base de dados, pois foi pesquisado dentro da lista pelo seu identificador(Id)
+            var localizado = ListaGrupoProduto.Find(x => x.Id == model.Id);
+                         
+            //Apos ser feita a busca do registro no banco, é verificado se o registro existe ou nao
+            //caso não existe é incluido um novo registro no banco de dados
+            //Caso o registro exista, é retornado o registro existente sem mudanças
+            if (localizado == null)
+            {
+                // Com este metodo abaixo é atribuito a variavel tipada os dados de model passada como parametro
+                // Em seguida os é adicionado o Id de incremento a mesma.
+                //localizado = model;
+                //localizado.Id = ListaGrupoProduto.Max(x => x.Id) + 1;
+                //ListaGrupoProduto.Add(localizado);
+
+                //return Json(localizado);
+
+                ////Estancia o objeto 
+                GrupoProdutoModel novoRegistro = new GrupoProdutoModel();
+
+                //Preenche os campos do objeto
+                novoRegistro.Id = ListaGrupoProduto.Max(x => x.Id) + 1;
+                novoRegistro.Nome = model.Nome;
+                novoRegistro.Ativo = model.Ativo;
+
+                //Inclui o objeto no banco de dados
+                ListaGrupoProduto.Add(novoRegistro);
+                return Json(novoRegistro);
             }
             else
             {
-                return false;
+            //    localizado.Nome = model.Nome;
+            //    localizado.Ativo = model.Ativo;
+                return Json(localizado);                 
             }
+            var ret = Json(localizado);
+            return ret;
+            // return Json(ListaGrupoProduto);
         }
 
 
