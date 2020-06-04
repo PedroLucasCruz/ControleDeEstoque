@@ -1,11 +1,14 @@
 ﻿using ControleEstoque.Models;
 using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+
+
 
 namespace ControleEstoque.Controllers
 {
@@ -52,8 +55,9 @@ namespace ControleEstoque.Controllers
         [HttpPost]
         [Authorize]
         public ActionResult RecuperarGrupoProduto(int id)
-        {
+        {           
             return Json(ListaGrupoProduto.Find(x => x.Id == id));
+
         }
 
 
@@ -114,12 +118,15 @@ namespace ControleEstoque.Controllers
             }
             else
             {
-            //    localizado.Nome = model.Nome;
-            //    localizado.Ativo = model.Ativo;
-                return Json(localizado);                 
+                //como localizadoé um objeto refenciado da lista
+                // quanto você faz uma alteração de localizado o objeto é alterado sem 
+                //precisar fazer mais nada
+                localizado.Nome = model.Nome;
+                localizado.Ativo = model.Ativo;               
+                return Json(ListaGrupoProduto);                 
             }
-            var ret = Json(localizado);
-            return ret;
+            //var ret = Json(localizado);
+            //return ret;
             // return Json(ListaGrupoProduto);
         }
 
