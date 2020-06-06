@@ -59,14 +59,11 @@ namespace ControleEstoque.Controllers
             return Json(ListaGrupoProduto.Find(x => x.Id == id));
 
         }
-
-
         [HttpPost]
         [Authorize]
         public ActionResult ExcluirGrupoProduto(int id)
         {
-            //var resposta = false;
-
+            #region
             //Nesta linha de execução é passado pelo cliente(frontEnd) um Id como parametro
             //Esse Id é usado como parametro para varrer a lista e então o metodo find retorna
             //O item que foi encontrado dentro dessa lista
@@ -74,61 +71,122 @@ namespace ControleEstoque.Controllers
             //Tendo em vista então que apos a busca o metodo find retornar de dentro da lista o
             //O objeto encontrado, podendo este objeto ter mais de um atributo
             //Apo esse retorno do valor, o objeto é gravado em uma variavel tipada e validado mais a baixo
+            #endregion
             var Item = ListaGrupoProduto.Find(x => x.Id == id);
+            #region
             //Validação para identificar se contem itens retornados            
+            #endregion
             if (Item != null)
             {
+                #region
                 //Esse metodo remove o objeto encontrado de dentro da lista
+                #endregion
                 ListaGrupoProduto.Remove(Item);
+                #region
                 //resposta = true;
+                #endregion
             }
             return Json(true);
         }
 
         public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)
         {
-            //Nessa primeira linha é verificado se o registro já existe dentro da 
-            //base de dados, pois foi pesquisado dentro da lista pelo seu identificador(Id)
-            var localizado = ListaGrupoProduto.Find(x => x.Id == model.Id);
-                         
-            //Apos ser feita a busca do registro no banco, é verificado se o registro existe ou nao
-            //caso não existe é incluido um novo registro no banco de dados
-            //Caso o registro exista, é retornado o registro existente sem mudanças
-            if (localizado == null)
+            var resultado = "OK";
+            var mensagens = new List<String>();
+
+            #region
+            //Este Id de validão é um tipo string vazio por que ele
+            //Vai ficar em branco quando estiver incosistente e 
+            //quando tiver um erro dentro do catch
+            #endregion
+            var idSalvo = string.Empty;
+            Object loc;
+            #region
+            //a Validão é atribuida no momento da inclusão do item
+            //Vamo utilizar o ModelState que mostra se a validação foi ou não bem sucedida
+            //Como visto no código a baixo se não for bem sucedida é executado algo dentro do bloco if
+            #endregion
+            if (!ModelState.IsValid)
             {
-                // Com este metodo abaixo é atribuito a variavel tipada os dados de model passada como parametro
-                // Em seguida os é adicionado o Id de incremento a mesma.
-                //localizado = model;
-                //localizado.Id = ListaGrupoProduto.Max(x => x.Id) + 1;
-                //ListaGrupoProduto.Add(localizado);
-
-                //return Json(localizado);
-
-                ////Estancia o objeto 
-                GrupoProdutoModel novoRegistro = new GrupoProdutoModel();
-
-                //Preenche os campos do objeto
-                novoRegistro.Id = ListaGrupoProduto.Max(x => x.Id) + 1;
-                novoRegistro.Nome = model.Nome;
-                novoRegistro.Ativo = model.Ativo;
-
-                //Inclui o objeto no banco de dados
-                ListaGrupoProduto.Add(novoRegistro);
-                return Json(novoRegistro);
+                resultado = "AVISO";
+                #region
+                //ModelState.Values - retorna uma ista de objeto inconsistentes
+                //SelectMany - Caso tenha mais de um campo
+                //SelectMany(x => x.Errors) contem qualquer erro ocorrido durante o bynd do Model
+                //Mesmo apos escrever até  ModelState.Values.SelectMany(x => x.Errors) ele retorna um obj
+                //Para que você retorne a mensagem final apos o uso do SeletMany, utilize Select e defina ErrorMessage
+                //No final das seleções de lambda converta para ToList
+                #endregion
+                mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
             }
             else
             {
-                //como localizadoé um objeto refenciado da lista
-                // quanto você faz uma alteração de localizado o objeto é alterado sem 
-                //precisar fazer mais nada
-                localizado.Nome = model.Nome;
-                localizado.Ativo = model.Ativo;               
-                return Json(ListaGrupoProduto);                 
+                try
+                {
+                    #region
+                    //Nessa primeira linha é verificado se o registro já existe dentro da 
+                    //base de dados, pois foi pesquisado dentro da lista pelo seu identificador(Id)
+                    #endregion
+                    var localizado = ListaGrupoProduto.Find(x => x.Id == model.Id);
+                    loc = localizado;
+                    #region             
+                    //Apos ser feita a busca do registro no banco, é verificado se o registro existe ou nao
+                    //caso não existe é incluido um novo registro no banco de dados
+                    //Caso o registro exista, é retornado o registro existente sem mudanças
+                    #endregion
+                    if (localizado == null)
+                    {
+                        #region
+                        // Com este metodo abaixo é atribuito a variavel tipada os dados de model passada como parametro
+                        // Em seguida os é adicionado o Id de incremento a mesma.
+                        //localizado = model;
+                        //localizado.Id = ListaGrupoProduto.Max(x => x.Id) + 1;
+                        //ListaGrupoProduto.Add(localizado);
+                        //return Json(localizado);
+                        #endregion
+                        ////Estancia o objeto 
+                        GrupoProdutoModel novoRegistro = new GrupoProdutoModel();
+
+                        //Preenche os campos do objeto
+                        novoRegistro.Id = ListaGrupoProduto.Max(x => x.Id) + 1;
+                        novoRegistro.Nome = model.Nome;
+                        novoRegistro.Ativo = model.Ativo;
+
+                        idSalvo = novoRegistro.Id.ToString();
+                        //Inclui o objeto no banco de dados
+                        ListaGrupoProduto.Add(novoRegistro);
+                        //return Json(novoRegistro);
+                    }
+                    else
+                    {
+                        #region
+                        //como localizadoé um objeto refenciado da lista
+                        // quanto você faz uma alteração de localizado o objeto é alterado sem 
+                        //precisar fazer mais nada
+                        #endregion
+                        localizado.Nome = model.Nome;
+                        localizado.Ativo = model.Ativo;
+                        // return Json(ListaGrupoProduto);
+                    }
+                    #region
+                    //var ret = Json(localizado);
+                    //return ret;
+                    // return Json(ListaGrupoProduto);
+                    #endregion
+                }
+                catch
+                {
+                    resultado = "ERRO";
+                }
             }
-            //var ret = Json(localizado);
-            //return ret;
-            // return Json(ListaGrupoProduto);
-        }
+            #region
+            //Esta estância no retorno é de um objeto do tipo anonimo que recebe os
+            //Valores das variaveis atribuidos nas variaveis durante a execução do bloco
+            //de código
+            #endregion
+            return Json(new { Resultado = resultado, Menssagem = mensagens, IdSalvo = idSalvo});
+        });
+        
 
 
         [Authorize]

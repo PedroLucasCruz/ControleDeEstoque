@@ -67,6 +67,9 @@
 @Html.TextBox("teste_nome")
 @Html.CheckBox("teste_ativo")
 <div id="modal_cadastro" class="form-horizontal invisivel" role="dialog">
+    <div id="msg_mensagem_aviso" class="text-danger invisivel">
+     
+    </div>    
     <fieldset>
         <div class="row">
 
@@ -94,6 +97,8 @@
                         <a id="btn_sair" class="btn btn-default" role="button" data-dismiss="modal"> <i class="glyphicon glyphicon-remove"> Sair </i> </a>
                         <a id="btn_confirmar" class="btn btn-primary" role="button"> <i class="glyphicon glyphicon-ok"> salvar </i> </a>
                     </div>
+                    <div id="msg_aviso" class="alert alert alert-warning invisivel"> Preencha os campos acima </div>
+                    <div id="msg_erro" class="alert alert-danger invisible"> Ops! Tivemos um problema técnico </div>
                 </div>
             </div>
         </div>
@@ -105,17 +110,13 @@
 
     @*<script src="~/Scripts/AcaoTabela.js"></script>*@
 
-<script>
+    <script>
 
     //Essa função serve para criar a estrutura da tabela de uma linha a ser adicionada
 
       function exibir_form(dados) {
-
-    //Aqui você pega toda a div marcado com Id="modal_cadastro"
-    //joga ela para um variavel tipada para ser usado mais adiante na execução
-    //
+                   
             @*var modal = $('#modal_cadastro');
-
            $('#id_cadastro').val(dados.Id);
             $('#txt_nome').val(dados.Nome);
             $('#cbx_ativo').prop('checked', dados.Ativo);
@@ -136,8 +137,8 @@
             });*@
 
 
-   // aqui a função pega os valores passados como pametro e alimenta
-   // os campos da modal
+   //Aqui você pega toda a div marcado com Id="modal_cadastro"
+    //joga ela para um variavel tipada para ser usado mais adiante na execução
           var modal = $('#modal_cadastro');
 
           var resultado = dados.Result;
@@ -146,7 +147,7 @@
 
           $('#id_cadastro').val(dados.Id);
           $('#teste_nome').val(dados.Nome);
-          $('#teste_ativo').prop('checked', dados.Ativo);               
+          $('#teste_ativo').prop('checked', dados.Ativo);
 
           $('#txt_nome').val(dados.Nome);
           $('#cbx_ativo').prop('checked', dados.Ativo);
@@ -177,7 +178,7 @@
         });
     }
         function criar_linha_grid(dados) {
-
+            $('#id_cadastro').val(dados.Id);
             var retorno =
                 '<tr data-id=' + dados.Id + '>' +
                 '<td>' + dados.Nome + '</td>' +
@@ -271,27 +272,45 @@
                 type: 'POST',
                 data: param,
                 success: function (data) {
-                    //var response = $.parseJSON(data);
-                    if (param.id == 0) {
-                        var table = $('#grid_cadastro').find('tbody');
-                        var linha = criar_linha_grid(data);
-                        table.append(linha);
-                    } else
-                    {
-                        //essa linda corresponde ao objeto que devera ser manipulado, em especifico ao TD
-                        //sem seguida com a propriedade .html vc inputa o valor do objeto que deseja passar
-                        //é importante se atentar ao nome dos atributos no objeto para que seja identificado qual
-                        //elemento será jogado no campo para alteração
-                        var linha = $('#grid_cadastro').find('tr[data-id=' + param.Id + ']').find('td');
 
-                        linha
-                            //aqui você mexe na primeira coluna que é do nome
-                            .eq(0).html(param.Nome).end()
-                            //aqui você atualiza a segunda coluna que é a de ativo
-                            .eq(1).html(param.Ativo ? 'SIM' : 'NÃO');
+                    //Caso o retorno do backend seja "OK" na validação de mensagem
+                    //ele executado o proximo bloco de código conforme abaixo
+                    if (data.Resultado == "OK") {
+
+                        if (param.Id == 0) {
+                            param.Id = data.idSalvo;
+                            var table = $('#grid_cadastro').find('tbody');
+                            var linha = criar_linha_grid(param);
+                            table.append(linha);
+                        } else {
+                            //essa linda corresponde ao objeto que devera ser manipulado, em especifico ao TD
+                            //sem seguida com a propriedade .html vc inputa o valor do objeto que deseja passar
+                            //é importante se atentar ao nome dos atributos no objeto para que seja identificado qual
+                            //elemento será jogado no campo para alteração
+                            var linha = $('#grid_cadastro').find('tr[data-id=' + param.Id + ']').find('td');
+
+                            linha
+                                //aqui você mexe na primeira coluna que é do nome
+                                .eq(0).html(param.Nome).end()
+                                //aqui você atualiza a segunda coluna que é a de ativo
+                                .eq(1).html(param.Ativo ? 'SIM' : 'NÃO');
+                        }
+                        $('#modal_cadastro').parents('.bootbox').modal('hide');
                     }
-                    $('#modal_cadastro').parents('.bootbox').modal('hide');
-                }
+                    else if(data.Resultado == "ERROR"){
+                        $('#msg_aviso').hide();
+                        $('#msg_mensagem_aviso').hide();
+                        $('#msg_erro').show();
+                    }
+                    else if (data.Resultado == "AVISO") {
+                        //Quando você faz um append, voc~e está acrecentando um elemento dentro
+                        //o que esta sendo passado como parametro são varias mensagens dentro do atributo mensagem
+                        $('#msg_mensagem_aviso').append(formatar_aviso(dados.Mensagens));
+                        $('#msg_aviso').show();
+                        $('#msg_mensagem_aviso').show();
+                        $('#msg_erro').hide();
+                    }                    
+                }              
             });
 
 
@@ -330,6 +349,17 @@
             });*@
 
         });
-</script>
+
+        //essa função recebe o retorno de parametro do backend como um objeto anonimo
+        //Então a função formata para o modelo lista em html as mensagne em json
+        function formatar_mensagem_aviso(Mensagens) {
+            var ret = '';
+
+            for (var i = 0; i <= Mensagens.length; i++) {
+                ret = '<li>' + Mensagens + '</li>'; 
+            }
+            return '<ul>' + ret + '<ul>';
+        }
+    </script>
 
 }
