@@ -92,7 +92,8 @@ namespace ControleEstoque.Controllers
         public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)
         {
             var resultado = "OK";
-            var mensagens = new List<String>();
+
+           List<String> mensagens = new List<String>();
 
             #region
             //Este Id de validão é um tipo string vazio por que ele
@@ -115,7 +116,7 @@ namespace ControleEstoque.Controllers
                 //SelectMany(x => x.Errors) contem qualquer erro ocorrido durante o bynd do Model
                 //Mesmo apos escrever até  ModelState.Values.SelectMany(x => x.Errors) ele retorna um obj
                 //Para que você retorne a mensagem final apos o uso do SeletMany, utilize Select e defina ErrorMessage
-                //No final das seleções de lambda converta para ToList
+                //No final das seleções de lambda convertida para ToList
                 #endregion
                 mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
             }
@@ -184,8 +185,8 @@ namespace ControleEstoque.Controllers
             //Valores das variaveis atribuidos nas variaveis durante a execução do bloco
             //de código
             #endregion
-            return Json(new { Resultado = resultado, Menssagem = mensagens, IdSalvo = idSalvo});
-        });
+            return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo});
+        }
         
 
 

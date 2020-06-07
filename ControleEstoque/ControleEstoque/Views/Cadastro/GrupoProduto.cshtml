@@ -11,7 +11,7 @@
     </section>
 
     <section id="cadastro_conteudo">
-
+    
         <div id="cabecalho_grid" class="row">
             <div class="col-md-12">
                 <a id="btn_incluir" class="btn btn-success" role="button">
@@ -114,8 +114,18 @@
 
     //Essa função serve para criar a estrutura da tabela de uma linha a ser adicionada
 
+        function limparCampoAviso() {
+            $('#msg_mensagem_aviso').empty();
+            $('#msg_aviso').hide();
+            $('#msg_mensagem_aviso').hide();
+            $('#msg_erro').hide();
+        }
+
       function exibir_form(dados) {
-                   
+
+          limparCampoAviso();
+
+
             @*var modal = $('#modal_cadastro');
            $('#id_cadastro').val(dados.Id);
             $('#txt_nome').val(dados.Nome);
@@ -305,7 +315,7 @@
                     else if (data.Resultado == "AVISO") {
                         //Quando você faz um append, voc~e está acrecentando um elemento dentro
                         //o que esta sendo passado como parametro são varias mensagens dentro do atributo mensagem
-                        $('#msg_mensagem_aviso').append(formatar_aviso(dados.Mensagens));
+                        $('#msg_mensagem_aviso').html(formatar_mensagem_aviso(data.Mensagens));
                         $('#msg_aviso').show();
                         $('#msg_mensagem_aviso').show();
                         $('#msg_erro').hide();
@@ -352,11 +362,13 @@
 
         //essa função recebe o retorno de parametro do backend como um objeto anonimo
         //Então a função formata para o modelo lista em html as mensagne em json
+        //Como essa função recebe uma lista de string de mensagem do backend, é preciso 
+        //um For para ler todas as mensagens percorrendo a lista passado por parametro 
         function formatar_mensagem_aviso(Mensagens) {
             var ret = '';
 
-            for (var i = 0; i <= Mensagens.length; i++) {
-                ret = '<li>' + Mensagens + '</li>'; 
+            for (var i = 0; i < Mensagens.length; i++) {
+                ret = '<li>' + Mensagens[i] + '</li>'; 
             }
             return '<ul>' + ret + '<ul>';
         }
