@@ -290,7 +290,7 @@
                         if (param.Id == 0) {
                             param.Id = data.idSalvo;
                             var table = $('#grid_cadastro').find('tbody');
-                            var linha = criar_linha_grid(param);
+                            var linha = criar_linha_grid(data);
                             table.append(linha);
                         } else {
                             //essa linda corresponde ao objeto que devera ser manipulado, em especifico ao TD

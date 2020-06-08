@@ -57,7 +57,6 @@ namespace ControleEstoque.Controllers
         public ActionResult RecuperarGrupoProduto(int id)
         {           
             return Json(ListaGrupoProduto.Find(x => x.Id == id));
-
         }
         [HttpPost]
         [Authorize]
@@ -101,6 +100,9 @@ namespace ControleEstoque.Controllers
             //quando tiver um erro dentro do catch
             #endregion
             var idSalvo = string.Empty;
+            var obj = new object();
+
+            List<string> listObj = new List<string>();
             Object loc;
             #region
             //a Validão é atribuida no momento da inclusão do item
@@ -130,6 +132,8 @@ namespace ControleEstoque.Controllers
                     #endregion
                     var localizado = ListaGrupoProduto.Find(x => x.Id == model.Id);
                     loc = localizado;
+                    GrupoProdutoModel novoRegistro = new GrupoProdutoModel();
+
                     #region             
                     //Apos ser feita a busca do registro no banco, é verificado se o registro existe ou nao
                     //caso não existe é incluido um novo registro no banco de dados
@@ -146,7 +150,7 @@ namespace ControleEstoque.Controllers
                         //return Json(localizado);
                         #endregion
                         ////Estancia o objeto 
-                        GrupoProdutoModel novoRegistro = new GrupoProdutoModel();
+                        
 
                         //Preenche os campos do objeto
                         novoRegistro.Id = ListaGrupoProduto.Max(x => x.Id) + 1;
@@ -156,6 +160,7 @@ namespace ControleEstoque.Controllers
                         idSalvo = novoRegistro.Id.ToString();
                         //Inclui o objeto no banco de dados
                         ListaGrupoProduto.Add(novoRegistro);
+                       
                         //return Json(novoRegistro);
                     }
                     else
@@ -169,6 +174,8 @@ namespace ControleEstoque.Controllers
                         localizado.Ativo = model.Ativo;
                         // return Json(ListaGrupoProduto);
                     }
+                    idSalvo = novoRegistro.Id.ToString();
+                     obj = novoRegistro;
                     #region
                     //var ret = Json(localizado);
                     //return ret;
@@ -178,14 +185,14 @@ namespace ControleEstoque.Controllers
                 catch
                 {
                     resultado = "ERRO";
-                }
+                }               
             }
             #region
             //Esta estância no retorno é de um objeto do tipo anonimo que recebe os
             //Valores das variaveis atribuidos nas variaveis durante a execução do bloco
             //de código
             #endregion
-            return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo});
+            return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo, Obj  = obj});
         }
         
 
