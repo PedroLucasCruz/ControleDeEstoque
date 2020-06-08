@@ -190,9 +190,9 @@
         function criar_linha_grid(dados) {
             $('#id_cadastro').val(dados.Id);
             var retorno =
-                '<tr data-id=' + dados.Id + '>' +
-                '<td>' + dados.Nome + '</td>' +
-                '<td>' + (dados.Ativo ? 'SIM' : 'NÃO') + '</td>' +
+                '<tr data-id=' + dados.Obj.Id + '>' +
+                '<td>' + dados.Obj.Nome + '</td>' +
+                '<td>' + (dados.Obj.Ativo ? 'SIM' : 'NÃO') + '</td>' +
                 '<td>' +
                 '<a class="btn btn-primary btn-alterar" role="button" style="margin-left: 3px";> <i class="glyphicon glyphicon-pencil"> Alterar </i> </a>' +
                 '<a class="btn btn-danger btn-excluir" role="button" > <i class="glyphicon glyphicon-trash"> Excluir </i> </a>' +

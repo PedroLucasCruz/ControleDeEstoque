@@ -133,7 +133,7 @@ namespace ControleEstoque.Controllers
                     var localizado = ListaGrupoProduto.Find(x => x.Id == model.Id);
                     loc = localizado;
                     GrupoProdutoModel novoRegistro = new GrupoProdutoModel();
-
+                    
                     #region             
                     //Apos ser feita a busca do registro no banco, é verificado se o registro existe ou nao
                     //caso não existe é incluido um novo registro no banco de dados
