@@ -1,11 +1,7 @@
 ﻿using ControleEstoque.Models;
-using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 
 
@@ -55,9 +51,10 @@ namespace ControleEstoque.Controllers
         [HttpPost]
         [Authorize]
         public ActionResult RecuperarGrupoProduto(int id)
-        {           
+        {
             return Json(ListaGrupoProduto.Find(x => x.Id == id));
         }
+
         [HttpPost]
         [Authorize]
         public ActionResult ExcluirGrupoProduto(int id)
@@ -91,8 +88,7 @@ namespace ControleEstoque.Controllers
         public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)
         {
             var resultado = "OK";
-
-           List<String> mensagens = new List<String>();
+            List<String> mensagens = new List<String>();
 
             #region
             //Este Id de validão é um tipo string vazio por que ele
@@ -103,6 +99,7 @@ namespace ControleEstoque.Controllers
             var obj = new object();
 
             List<string> listObj = new List<string>();
+
             Object loc;
             #region
             //a Validão é atribuida no momento da inclusão do item
@@ -133,7 +130,7 @@ namespace ControleEstoque.Controllers
                     var localizado = ListaGrupoProduto.Find(x => x.Id == model.Id);
                     loc = localizado;
                     GrupoProdutoModel novoRegistro = new GrupoProdutoModel();
-                    
+
                     #region             
                     //Apos ser feita a busca do registro no banco, é verificado se o registro existe ou nao
                     //caso não existe é incluido um novo registro no banco de dados
@@ -150,7 +147,7 @@ namespace ControleEstoque.Controllers
                         //return Json(localizado);
                         #endregion
                         ////Estancia o objeto 
-                        
+
 
                         //Preenche os campos do objeto
                         novoRegistro.Id = ListaGrupoProduto.Max(x => x.Id) + 1;
@@ -160,7 +157,7 @@ namespace ControleEstoque.Controllers
                         idSalvo = novoRegistro.Id.ToString();
                         //Inclui o objeto no banco de dados
                         ListaGrupoProduto.Add(novoRegistro);
-                       
+
                         //return Json(novoRegistro);
                     }
                     else
@@ -175,7 +172,7 @@ namespace ControleEstoque.Controllers
                         // return Json(ListaGrupoProduto);
                     }
                     idSalvo = novoRegistro.Id.ToString();
-                     obj = novoRegistro;
+                    obj = novoRegistro;
                     #region
                     //var ret = Json(localizado);
                     //return ret;
@@ -185,16 +182,16 @@ namespace ControleEstoque.Controllers
                 catch
                 {
                     resultado = "ERRO";
-                }               
+                }
             }
             #region
             //Esta estância no retorno é de um objeto do tipo anonimo que recebe os
             //Valores das variaveis atribuidos nas variaveis durante a execução do bloco
             //de código
             #endregion
-            return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo, Obj  = obj});
+            return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo, Obj = obj });
         }
-        
+
 
 
         [Authorize]
