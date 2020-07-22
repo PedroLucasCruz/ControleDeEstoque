@@ -20,8 +20,7 @@ namespace ControleEstoque.DAO
                 cmd = new SqlCommand("procedure aqui", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("nome_paramentro_da_proceduroAqui",entidade.Id);
-                cmd.ExecuteReader();
-               
+                cmd.ExecuteReader();               
             }
             else
             {
@@ -41,22 +40,33 @@ namespace ControleEstoque.DAO
         }
 
         public override Result<GrupoProdutoModel> Listar()
-        {               
+        {
             List<GrupoProdutoModel> lista = new List<GrupoProdutoModel>();            
-            GrupoProdutoModel grupoProdutoModel = new GrupoProdutoModel();      
+            Result<GrupoProdutoModel> resul = new Result<GrupoProdutoModel>(new List<GrupoProdutoModel>());
+
+            cmd = new SqlCommand("tab_grupo_produto", conn);
+            cmd.Parameters.AddWithValue("@Int_Ntipo", 1);
+
+            SqlDataReader sqlData = cmd.ExecuteReader();
+
+            if (sqlData.HasRows)
+            {
+                while (sqlData.Read())
+                {
+
+                }
+            }
+
+            GrupoProdutoModel grupoProdutoModel = new GrupoProdutoModel();           
             
             grupoProdutoModel.Id = 1;
             grupoProdutoModel.Ativo = true;
-            grupoProdutoModel.Nome = "Pera";
+            grupoProdutoModel.Nome = "Pera";                   
 
-            Result<GrupoProdutoModel> resul = new Result<GrupoProdutoModel>(lista);
-
-            resul.entidades.Add(grupoProdutoModel);
+            resul.entidades.Add();
             
-            //resul.mensagens.Add("Teste");
-            
-            //resul.entidadeTT.Add();
-            
+            //resul.mensagens.Add("Teste");            
+            //resul.entidadeTT.Add();            
             //= grupoProdutoModel;
             //resul.entidadeTT.Add(grupoProdutoModel);            
             //result.entidades.Add(grupoProdutoModel);           

@@ -49,10 +49,10 @@ namespace ControleEstoque.Models
 
                 //Para o trecho abaixo deve ser configurado a classe de criptografia 
                 //strConnection = Criptografar.Decrypt(strConnection);
-
-                conn = new SqlConnection(strConnection);
+                conn = new SqlConnection(strConnection);               
                 conn.Open();
                 return conectado = true;
+                                
             }
             catch (Exception e)
             {
