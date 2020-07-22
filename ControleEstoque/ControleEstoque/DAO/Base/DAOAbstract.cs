@@ -8,21 +8,28 @@ using System.Web.Mvc;
 using System.Data;
 using System.Configuration;
 using ControleEstoque.Interface;
+using ControleEstoque.Models.Base;
+using ControleEstoque.Business.Base;
 
 namespace ControleEstoque.Models
 {
     //Como uma classe abstrata não serve pra ser estanciada você deve definir 
     //a classe com o a anotação abstract para que ela não seja estanciada
-    public abstract class DAOabstract<T> : ICrud<T>
+    public abstract class DAOabstract<T> : ICrud<T> where T : AbstractEntidadeDominio
     {
         //Variavel "conn" com o tipo SqlConnection recebe a string de conexão
         protected SqlConnection conn;
         //Variavel que vai receber a string de conexão como parametro 
         protected String strConnection;
-
+        
         //Variavel que recebe valor boleano que informa o que pode retornar
         protected bool conectado;
 
+        //Cmd é usado na camada de Dao para que 
+        protected SqlCommand cmd;
+
+        //Result é implementado por que Dao usa a mesma interface que business
+        protected Result<T> result;
 
         protected bool conectar()
         {
@@ -68,12 +75,11 @@ namespace ControleEstoque.Models
                 throw ex;
             }
         }
-        public abstract bool Alterar(T entidade);
-        public abstract bool Excluir(T entidade);
-        public abstract List<T> GetById(T entidade);
-        public abstract List<T> Listar(T entidade);
-        public abstract bool Salvar(T entidade);
-        
-
+        public abstract Result<T> Alterar(T entidade);
+        public abstract Result<T> Excluir(T entidade);
+        public abstract Result<T> GetById(T entidade);
+        public abstract Result<T> Listar();
+        public abstract Result<T> Salvar(T entidade);        
+       
     }
 }

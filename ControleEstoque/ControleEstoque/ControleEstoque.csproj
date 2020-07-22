@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Business\Base\AbstractBusiness.cs" />
+    <Compile Include="Business\Base\Result.cs" />
     <Compile Include="Business\GrupoProdutoB.cs" />
     <Compile Include="Controllers\CadastroController.cs" />
     <Compile Include="Controllers\ContaController.cs" />

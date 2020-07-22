@@ -1,7 +1,11 @@
-﻿using ControleEstoque.Models;
+﻿using ControleEstoque.Business;
+using ControleEstoque.Business.Base;
+using ControleEstoque.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 
@@ -18,8 +22,10 @@ namespace ControleEstoque.Controllers
         //Logo apos estanciar a lista é estancia o objeto dentro da lista e adicionando este objeto com .Add
         public List<GrupoProdutoModel> ListaProduto()
         {
-            List<GrupoProdutoModel> lista = new List<GrupoProdutoModel>();
-            lista.Add(new GrupoProdutoModel(1, "pera", true));
+            //List<GrupoProdutoModel> lista = new List<GrupoProdutoModel>();
+            //lista.Add(new GrupoProdutoModel(1, "pera", true));
+            //return lista;
+            List<GrupoProdutoModel> lista = new GrupoProdutoB(HttpContext.Request).Listar()?.entidades;
             return lista;
         }
         #endregion
@@ -45,7 +51,8 @@ namespace ControleEstoque.Controllers
         [Authorize]
         public ActionResult GrupoProduto()
         {
-            return View(ListaGrupoProduto);
+            // return Json(ListaProduto());
+            return View(ListaProduto());
         }
 
         [HttpPost]

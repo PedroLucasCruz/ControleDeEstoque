@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControleEstoque.Business.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace ControleEstoque.Interface
 {
     interface ICrud<T>
     {
-        List<T> Listar(T entidade);
-        List<T> GetById(T entidade);
-        bool Excluir(T entidade);
-        bool Salvar(T entidade);
-        bool Alterar(T entidade);
+        Result<T> Listar();
+        Result<T> GetById(T entidade);
+        Result<T> Excluir(T entidade);
+        Result<T> Salvar(T entidade);
+        Result<T> Alterar(T entidade);       
     }
 }
