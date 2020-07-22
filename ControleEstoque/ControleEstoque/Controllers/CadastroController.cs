@@ -23,7 +23,7 @@ namespace ControleEstoque.Controllers
         public List<GrupoProdutoModel> ListaProduto()
         {
             //List<GrupoProdutoModel> lista = new List<GrupoProdutoModel>();
-            //lista.Add(new GrupoProdutoModel(1, "pera", true));
+            //lista.Add(new GrupoProdutoModel(7, "pera", true));
             //return lista;
             List<GrupoProdutoModel> lista = new GrupoProdutoB(HttpContext.Request).Listar()?.entidades;
             return lista;
