@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 
@@ -51,8 +52,10 @@ namespace ControleEstoque.Controllers
         [Authorize]
         public ActionResult GrupoProduto()
         {
+            List<GrupoProdutoModel> lista = new GrupoProdutoB(HttpContext.Request).Listar()?.entidades;
+            //return lista;
             // return Json(ListaProduto());
-            return View(ListaProduto());
+            return View(lista);
         }
 
         [HttpPost]
@@ -64,8 +67,19 @@ namespace ControleEstoque.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult ExcluirGrupoProduto(int id)
+        public ActionResult ExcluirGrupoProduto(GrupoProdutoModel entidade)
         {
+            
+            List<GrupoProdutoModel> callBackEntidades = new GrupoProdutoB(HttpContext.Request).GetById(entidade).entidades;
+           
+            if (callBackEntidades.Count > 0)
+            {
+                callBackEntidades = new GrupoProdutoB(HttpContext.Request).Excluir(entidade).entidades;
+                return Json(callBackEntidades, JsonRequestBehavior.AllowGet);
+            }
+        
+            return Json(callBackEntidades, JsonRequestBehavior.AllowGet);
+            #region
             #region
             //Nesta linha de execução é passado pelo cliente(frontEnd) um Id como parametro
             //Esse Id é usado como parametro para varrer a lista e então o metodo find retorna
@@ -75,21 +89,22 @@ namespace ControleEstoque.Controllers
             //O objeto encontrado, podendo este objeto ter mais de um atributo
             //Apo esse retorno do valor, o objeto é gravado em uma variavel tipada e validado mais a baixo
             #endregion
-            var Item = ListaGrupoProduto.Find(x => x.Id == id);
+            //var Item = ListaGrupoProduto.Find(x => x.Id == id);
             #region
             //Validação para identificar se contem itens retornados            
             #endregion
-            if (Item != null)
-            {
-                #region
-                //Esse metodo remove o objeto encontrado de dentro da lista
-                #endregion
-                ListaGrupoProduto.Remove(Item);
-                #region
-                //resposta = true;
-                #endregion
-            }
-            return Json(true);
+            //if (Item != null)
+            //{
+            //    #region
+            //    //Esse metodo remove o objeto encontrado de dentro da lista
+            //    #endregion
+            //    ListaGrupoProduto.Remove(Item);
+            //    #region
+            //    //resposta = true;
+            //    #endregion
+            //}
+            // return Json(callBack);
+            #endregion 
         }
 
         public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)

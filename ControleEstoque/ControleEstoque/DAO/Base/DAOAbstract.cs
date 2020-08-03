@@ -10,6 +10,8 @@ using System.Configuration;
 using ControleEstoque.Interface;
 using ControleEstoque.Models.Base;
 using ControleEstoque.Business.Base;
+using System.Web.UI.WebControls;
+using System.Collections;
 
 namespace ControleEstoque.Models
 {
@@ -33,6 +35,8 @@ namespace ControleEstoque.Models
 
         protected bool conectar()
         {
+            
+
             try
             {
                 #region
@@ -49,10 +53,10 @@ namespace ControleEstoque.Models
 
                 //Para o trecho abaixo deve ser configurado a classe de criptografia 
                 //strConnection = Criptografar.Decrypt(strConnection);
-                conn = new SqlConnection(strConnection);               
-                conn.Open();
-                return conectado = true;
-                                
+                conn = new SqlConnection(strConnection);
+                var teste = conn.State;
+                conn.Open();                
+                return conectado = true;                                
             }
             catch (Exception e)
             {
@@ -60,6 +64,29 @@ namespace ControleEstoque.Models
             }
         }
 
+
+        protected void desconectar()
+        {
+            if (conn.State.ToString() == "Open")
+            {
+                conn.Close();
+            }          
+        }
+
+        protected bool VerificarConexao()
+        {
+            if(conn.State.ToString() == "Open")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        //Esse metodo de conexão conectar com o parametro de string passado 
         protected bool conectar(String strConnection)
         {
             try
@@ -75,6 +102,22 @@ namespace ControleEstoque.Models
                 throw ex;
             }
         }
+        
+        protected Object tipoDado(SqlDataReader sqlData, int indice)
+        {
+            try
+            {
+                int inCallBackData = Int32.Parse(sqlData.GetString(indice));
+                return inCallBackData;
+            }
+            catch
+            {
+                string strCallBackData = sqlData.GetString(indice);
+                return strCallBackData;
+            }
+        }
+           
+
         public abstract Result<T> Alterar(T entidade);
         public abstract Result<T> Excluir(T entidade);
         public abstract Result<T> GetById(T entidade);

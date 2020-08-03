@@ -40,8 +40,8 @@
                         @foreach (var item in Model)
                         {
                             <tr data-id="@item.Id">
-                                <td> @item.Nome</td>
-                                <td>
+                                <td data-nome="@item.Nome"> @item.Nome</td>
+                                <td data-check="@item.Ativo">
                                     @{
                                         var ativo = (item.Ativo ? "SIM" : "NÃO");
                                     }@ativo
@@ -130,9 +130,9 @@
            $('#id_cadastro').val(dados.Id);
             $('#txt_nome').val(dados.Nome);
             $('#cbx_ativo').prop('checked', dados.Ativo);
-
+          
           var modal_cadastro = $('#modal_cadastro');
-
+            
             bootbox.dialog({
                 title: '@ViewBag.Title',
                 message: modal_cadastro
@@ -146,7 +146,7 @@
                 modal_cadastro.hide().appendTo('body');
             });*@
 
-
+    
    //Aqui você pega toda a div marcado com Id="modal_cadastro"
     //joga ela para um variavel tipada para ser usado mais adiante na execução
           var modal = $('#modal_cadastro');
@@ -218,8 +218,15 @@
                 //No caso abaixo é acessado o Tr como elemento ais proximo, e sem seguida é acessado o atributo com attr('data-id')
                 //Apos acessa o elemento mais proximo vc acessa seua atributo com attr('data-id')
                 id = btn.closest('tr').attr('data-id'),
+                Nome = $("#Nome").val(),
+                CheckBox = $('#cbx_ativo').prop('checked'),
                 url = '@Url.Action("RecuperarGrupoProduto","Cadastro")',
-                param = { 'id': id };
+
+                param = {
+                    'id': id,
+                    'Nome': Nome, 
+                    'Ativo': CheckBox
+                };
 
             $.post(url, param, function (response) {
                 if (response) {
@@ -232,20 +239,28 @@
             var btn = $(this),
                 tr = btn.closest('tr'),
                 id = tr.attr('data-id'),
+                Nome = $(this).closest('tr').find('td[data-nome]').data('nome'),
+                    //$("#Nome").val(),
+                CheckBox = $(this).closest('tr').find('td[data-check]').data('check') //$('#cbx_ativo').prop('checked'),
                 url = '@Url.Action("ExcluirGrupoProduto","Cadastro")',
-                param = { 'id': id };
+                param = {
+                    'id': id,
+                    'Nome': Nome,
+                    'Ativo': CheckBox
+                };
 
             bootbox.confirm({
                 size: "small",
                 message: "Are you sure?",
                 callback: function (result) {
                     if (result) {
-                        bootbox.alert("Item Excluido")
+                       
 
                         $.post(url, param, function (response) {
                             //Quando você encontrar a resposta o retorno do post ele executa a linha dentro do If
-                            if (response) {
+                            if (response.count > 0) {
                                 tr.remove();
+                                bootbox.alert("Item Excluido")
                             }
                         });
                     }
