@@ -255,10 +255,11 @@
                 callback: function (result) {
                     if (result) {
                        
-
                         $.post(url, param, function (response) {
                             //Quando você encontrar a resposta o retorno do post ele executa a linha dentro do If
-                            if (response.count > 0) {
+                            //acessa a propriedades em sequencia e retorna o valor de call para validar e remover a linha
+                            var teste = parseInt(response[0].valueOf.__proto__.call.length)
+                            if (teste > 0) {
                                 tr.remove();
                                 bootbox.alert("Item Excluido")
                             }
