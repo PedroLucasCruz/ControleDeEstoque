@@ -30,6 +30,7 @@ namespace ControleEstoque.Business
 
         public override Result<GrupoProdutoModel> Salvar(GrupoProdutoModel grupoProdutoModel)
         {
+
             try
             {
               return  base.Salvar(grupoProdutoModel);

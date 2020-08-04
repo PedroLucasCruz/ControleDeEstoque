@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 using ControleEstoque.Business;
 using ControleEstoque.Interface;
 using ControleEstoque.Models;
@@ -37,16 +38,17 @@ namespace ControleEstoque.Business.Base
         }
 
         public virtual Result<T> Excluir(T entidade)
-        {          
+        {
             try
             {
                 //result.entidadeT =  dao.Excluir(entidade);
                 //return result;      
                 return dao.Excluir(entidade);
+
             }
             catch
             {
-                  result.mensagens.Add("");           
+                result.mensagens.Add("");
             }
             return result;
         }

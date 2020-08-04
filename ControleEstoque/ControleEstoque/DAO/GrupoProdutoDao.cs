@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
@@ -113,8 +114,8 @@ namespace ControleEstoque.DAO
                             grupoProdutoModel.Id = int.Parse(sqlData[0].ToString());
                             grupoProdutoModel.Nome = sqlData[1].ToString();
                             grupoProdutoModel.Ativo = (bool)sqlData[2];
-
                             result.entidades.Add(grupoProdutoModel);
+
                             PropertyInfo info = grupoProdutoModel.GetType().GetProperty("Nome");
                         }
                     }
@@ -153,15 +154,15 @@ namespace ControleEstoque.DAO
                     if (sqlData.HasRows)
                     {
                         while (sqlData.Read())
-                        {
+                        {   
                             GrupoProdutoModel grupoProdutoModel = new GrupoProdutoModel();
 
                             grupoProdutoModel.Id = int.Parse(sqlData[0].ToString());
                             grupoProdutoModel.Nome = sqlData[1].ToString();
-                            grupoProdutoModel.Ativo = Boolean.Parse(sqlData[2].ToString());
+                            grupoProdutoModel.Ativo = (Boolean)sqlData[2];
 
                             result.entidades.Add(grupoProdutoModel);
-                        }
+                        }   
                     }
                 }
                 else
@@ -180,8 +181,44 @@ namespace ControleEstoque.DAO
             return result;
         }
         public override Result<GrupoProdutoModel> Salvar(GrupoProdutoModel entidade)
-        {
-            throw new NotImplementedException();
+        {            
+            Result<GrupoProdutoModel> result = new Result<GrupoProdutoModel>(new List<GrupoProdutoModel>());
+
+            base.conectar();
+            try
+            {
+                if (VerificarConexao())
+                {
+                    cmd = new SqlCommand("STP_GrupoProduto_Salvar", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Nome", entidade.Nome);
+                    cmd.Parameters.AddWithValue("@Ativo", entidade.Ativo);
+
+                    // result.callBackBool = cmd.ExecuteNonQuery() > 0 ? true : false;
+                    SqlDataReader sqlData = cmd.ExecuteReader();
+
+                    if (sqlData.HasRows)
+                    {
+                        while (sqlData.Read())
+                        {
+                            GrupoProdutoModel grupoProdutoModel = new GrupoProdutoModel();
+                            grupoProdutoModel.Id = int.Parse(sqlData[0].ToString());
+                            grupoProdutoModel.Nome = sqlData[1].ToString();
+                            grupoProdutoModel.Ativo = (Boolean)sqlData[2];
+                            result.entidades.Add(grupoProdutoModel);
+                        }
+                    }
+                }
+                else
+                {
+                    result.mensagens.Add("Banco de dados não conectado");
+                }
+            }
+            catch(Exception ex)
+            {
+                result.mensagens.Add(ex.Message);
+            }
+            return result;                    
         }
     }
 }

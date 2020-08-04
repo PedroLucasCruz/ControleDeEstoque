@@ -11,7 +11,7 @@
     </section>
 
     <section id="cadastro_conteudo">
-    
+
         <div id="cabecalho_grid" class="row">
             <div class="col-md-12">
                 <a id="btn_incluir" class="btn btn-success" role="button">
@@ -68,8 +68,8 @@
 @Html.CheckBox("teste_ativo")
 <div id="modal_cadastro" class="form-horizontal invisivel" role="dialog">
     <div id="msg_mensagem_aviso" class="text-danger invisivel">
-     
-    </div>    
+
+    </div>
     <fieldset>
         <div class="row">
 
@@ -110,7 +110,7 @@
 
     @*<script src="~/Scripts/AcaoTabela.js"></script>*@
 
-    <script>
+<script>
 
     //Essa função serve para criar a estrutura da tabela de uma linha a ser adicionada
 
@@ -130,9 +130,9 @@
            $('#id_cadastro').val(dados.Id);
             $('#txt_nome').val(dados.Nome);
             $('#cbx_ativo').prop('checked', dados.Ativo);
-          
-          var modal_cadastro = $('#modal_cadastro');
             
+          var modal_cadastro = $('#modal_cadastro');
+                           
             bootbox.dialog({
                 title: '@ViewBag.Title',
                 message: modal_cadastro
@@ -146,7 +146,7 @@
                 modal_cadastro.hide().appendTo('body');
             });*@
 
-    
+
    //Aqui você pega toda a div marcado com Id="modal_cadastro"
     //joga ela para um variavel tipada para ser usado mais adiante na execução
           var modal = $('#modal_cadastro');
@@ -160,7 +160,8 @@
           $('#teste_ativo').prop('checked', dados.Ativo);
 
           $('#txt_nome').val(dados.Nome);
-          $('#cbx_ativo').prop('checked', dados.Ativo);
+        
+          $('#cbx_ativo').prop('checked', Boolean(dados.Ativo));
 
    // Esse função bootbox.dialog é o que permite o inicio da manipulação da caixa modal
    // dentro da função dialog existe '{}' que representam os objetos para exibir no modal
@@ -201,7 +202,7 @@
 
             return retorno;
         }
-    
+
     $(document).on('click', '#btn_incluir', function () {
 
         exibir_form({ Id: 0, Nome: '', Ativo: false });
@@ -218,21 +219,24 @@
                 //No caso abaixo é acessado o Tr como elemento ais proximo, e sem seguida é acessado o atributo com attr('data-id')
                 //Apos acessa o elemento mais proximo vc acessa seua atributo com attr('data-id')
                 id = btn.closest('tr').attr('data-id'),
-                Nome = $("#Nome").val(),
-                CheckBox = $('#cbx_ativo').prop('checked'),
+                Nome = $('.table td').eq(0).text().trim(), //$("#Nome").val(),
+                CheckBox = $('.table td').eq(1).text().trim() == "sim" ? true : false
+                    //$(this).closest('tr').find('td[data-check]').data('check'), //$('#cbx_ativo').prop('checked'),
                 url = '@Url.Action("RecuperarGrupoProduto","Cadastro")',
 
                 param = {
                     'id': id,
-                    'Nome': Nome, 
+                    'Nome': Nome,
                     'Ativo': CheckBox
                 };
 
-            $.post(url, param, function (response) {
-                if (response) {
-                    exibir_form(response)
-                }
-            });
+            exibir_form(param)
+
+            //$.post(url, param, function (response) {
+            //    if (response) {
+            //        exibir_form(response)
+            //    }
+            //});
         })
 
         .on('click', '.btn-excluir', function () {
@@ -240,6 +244,7 @@
                 tr = btn.closest('tr'),
                 id = tr.attr('data-id'),
                 Nome = $(this).closest('tr').find('td[data-nome]').data('nome'),
+
                     //$("#Nome").val(),
                 CheckBox = $(this).closest('tr').find('td[data-check]').data('check') //$('#cbx_ativo').prop('checked'),
                 url = '@Url.Action("ExcluirGrupoProduto","Cadastro")',
@@ -254,7 +259,7 @@
                 message: "Are you sure?",
                 callback: function (result) {
                     if (result) {
-                       
+
                         $.post(url, param, function (response) {
                             //Quando você encontrar a resposta o retorno do post ele executa a linha dentro do If
                             //acessa a propriedades em sequencia e retorna o valor de call para validar e remover a linha
@@ -275,8 +280,8 @@
         //Este evento de botão é de dentro do modal, quando o usuário clicar no botão confirmar
         .on('click', '#btn_confirmar', function () {
 
-                 //Nesta requisição é passado a Url do controller requisitado utilizando razor
-                 //Seu tipo é definido com Post para enviar dos dados e retorno das informações
+                //Nesta requisição é passado a Url do controller requisitado utilizando razor
+                //Seu tipo é definido com Post para enviar dos dados e retorno das informações
                 //Dentro da construção de objetos de data estão:
                 //Id: que é preenchido com os dados do list assim que o modal é chamado, porém, seu valor é resgatado com
                 //como é visto abaixo para que seja usado de parametro quando for enviado a requisição post
@@ -291,6 +296,19 @@
                 Nome: $('#txt_nome').val(),
                 Ativo: $('#cbx_ativo').prop('checked')
             };
+
+            if (param.Id > 0) {
+               let  url = '@Url.Action("ExcluirGrupoProduto","Cadastro")'
+                $.post(url, param, function (response) {
+                if (response) {
+                    exibir_form(response)
+                    };
+            });
+
+            }
+            else
+            {
+
 
             $.ajax({
                 url: '@Url.Action("SalvarGrupoProduto", "Cadastro")',
@@ -334,11 +352,11 @@
                         $('#msg_aviso').show();
                         $('#msg_mensagem_aviso').show();
                         $('#msg_erro').hide();
-                    }                    
-                }              
+                    }
+                }
             });
 
-
+            }
              @*var btn = $(this),
                 url = '@Url.Action("SalvarGrupoProduto","Cadastro")',
                 //param se tranforma em um objeto que será passado como parametro na requisição de post
@@ -377,16 +395,16 @@
 
         //essa função recebe o retorno de parametro do backend como um objeto anonimo
         //Então a função formata para o modelo lista em html as mensagne em json
-        //Como essa função recebe uma lista de string de mensagem do backend, é preciso 
-        //um For para ler todas as mensagens percorrendo a lista passado por parametro 
+        //Como essa função recebe uma lista de string de mensagem do backend, é preciso
+        //um For para ler todas as mensagens percorrendo a lista passado por parametro
         function formatar_mensagem_aviso(Mensagens) {
             var ret = '';
 
             for (var i = 0; i < Mensagens.length; i++) {
-                ret = '<li>' + Mensagens[i] + '</li>'; 
+                ret = '<li>' + Mensagens[i] + '</li>';
             }
             return '<ul>' + ret + '<ul>';
         }
-    </script>
+</script>
 
 }

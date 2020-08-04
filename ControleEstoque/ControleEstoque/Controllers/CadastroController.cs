@@ -109,6 +109,19 @@ namespace ControleEstoque.Controllers
 
         public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)
         {
+            var callback = new Result<GrupoProdutoModel>();
+
+            if (!ModelState.IsValid)
+            {
+                callback.mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
+            }
+            else
+            {
+                callback = new GrupoProdutoB(HttpContext.Request).Salvar(model);
+               
+            }
+
+            #region
             var resultado = "OK";
             List<String> mensagens = new List<String>();
 
@@ -211,7 +224,9 @@ namespace ControleEstoque.Controllers
             //Valores das variaveis atribuidos nas variaveis durante a execução do bloco
             //de código
             #endregion
-            return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo, Obj = obj });
+            #endregion
+
+            return Json(new {Mensagens = mensagens , Obj = callback.entidades });
         }
 
 
