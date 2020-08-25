@@ -20,18 +20,33 @@ namespace ControleEstoque.DAO
 
         public override Result<GrupoProdutoModel> Alterar(GrupoProdutoModel entidade)
         {
-            //if (base.conectar())
-            //{
+
+            Result<GrupoProdutoModel> result = new Result<GrupoProdutoModel>(new List<GrupoProdutoModel>());
+
             try
             {
                 base.conectar();
 
                 if (VerificarConexao())
                 {
-                    cmd = new SqlCommand("procedure aqui", conn);
+                    cmd = new SqlCommand("STP_GrupoProduto_Alterar", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("nome_paramentro_da_proceduroAqui", entidade.Id);
-                    cmd.ExecuteReader();
+                    cmd.Parameters.AddWithValue("@Id", entidade.Id);
+                    cmd.Parameters.AddWithValue("@Nome", entidade.Nome);
+                    cmd.Parameters.AddWithValue("@Ativo", entidade.Ativo);
+                    SqlDataReader sqlData = cmd.ExecuteReader();
+
+                    if (sqlData.HasRows)
+                    {
+                        while (sqlData.Read())
+                        {
+                            GrupoProdutoModel grupoProdutoModel = new GrupoProdutoModel();
+                            grupoProdutoModel.Id = int.Parse(sqlData[0].ToString());
+                            grupoProdutoModel.Nome = sqlData[1].ToString();
+                            grupoProdutoModel.Ativo = (Boolean)sqlData[2];
+                            result.entidades.Add(grupoProdutoModel);
+                        }
+                    }
                 }
                 else
                 {
@@ -40,20 +55,13 @@ namespace ControleEstoque.DAO
             }
             catch (Exception ex)
             {
-                result.mensagens.Add("");
+                result.mensagens.Add(ex.Message);
             }
             finally
             {
                 base.desconectar();
             }
-
-            return result;
-
-            //}
-            //else
-            //{
-            //}
-            //throw new NotImplementedException();
+            return result;          
         }
 
         public override Result<GrupoProdutoModel> Excluir(GrupoProdutoModel entidade)
@@ -63,7 +71,7 @@ namespace ControleEstoque.DAO
             base.conectar();
             if (VerificarConexao())
             {
-            
+
                 cmd = new SqlCommand("STP_GrupoProduto_DeletarPorId", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", entidade.Id);
@@ -78,11 +86,11 @@ namespace ControleEstoque.DAO
 
                         grupoProdutoModel.Id = int.Parse(sqlData[0].ToString());
                         grupoProdutoModel.Nome = sqlData[1].ToString();
-                        grupoProdutoModel.Ativo =  (bool)sqlData[2];
+                        grupoProdutoModel.Ativo = (bool)sqlData[2];
 
                         result.entidades.Add(grupoProdutoModel);
                     }
-                }    
+                }
 
             }
             return result;
@@ -154,7 +162,7 @@ namespace ControleEstoque.DAO
                     if (sqlData.HasRows)
                     {
                         while (sqlData.Read())
-                        {   
+                        {
                             GrupoProdutoModel grupoProdutoModel = new GrupoProdutoModel();
 
                             grupoProdutoModel.Id = int.Parse(sqlData[0].ToString());
@@ -162,7 +170,7 @@ namespace ControleEstoque.DAO
                             grupoProdutoModel.Ativo = (Boolean)sqlData[2];
 
                             result.entidades.Add(grupoProdutoModel);
-                        }   
+                        }
                     }
                 }
                 else
@@ -181,7 +189,7 @@ namespace ControleEstoque.DAO
             return result;
         }
         public override Result<GrupoProdutoModel> Salvar(GrupoProdutoModel entidade)
-        {            
+        {
             Result<GrupoProdutoModel> result = new Result<GrupoProdutoModel>(new List<GrupoProdutoModel>());
 
             base.conectar();
@@ -214,11 +222,11 @@ namespace ControleEstoque.DAO
                     result.mensagens.Add("Banco de dados não conectado");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.mensagens.Add(ex.Message);
             }
-            return result;                    
+            return result;
         }
     }
 }

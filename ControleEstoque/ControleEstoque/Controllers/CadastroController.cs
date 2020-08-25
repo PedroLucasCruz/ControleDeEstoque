@@ -114,11 +114,11 @@ namespace ControleEstoque.Controllers
             if (!ModelState.IsValid)
             {
                 callback.mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
+            
             }
             else
             {
-                callback = new GrupoProdutoB(HttpContext.Request).Salvar(model);
-               
+                callback = new GrupoProdutoB(HttpContext.Request).Salvar(model);               
             }
 
             #region
@@ -226,7 +226,14 @@ namespace ControleEstoque.Controllers
             #endregion
             #endregion
 
-            return Json(new {Mensagens = mensagens , Obj = callback.entidades });
+            return Json(new {Obj = callback.entidades, Mensagens = callback.mensagens});
+        }
+
+        public ActionResult AlterarGrupoProduto(GrupoProdutoModel model)
+        {
+            Result<GrupoProdutoModel> callBack = new GrupoProdutoB(HttpContext.Request).Alterar(model);
+        
+            return Json(new { Obj = callBack, Mensagens = callBack.mensagens });
         }
 
 
