@@ -154,7 +154,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="Informações Adicionais da aplicação\anotação importante do projeto.txt" />
     <Content Include="Informações Adicionais da aplicação\Configurações de conta do banco de dados SQL server.txt" />
-    <Content Include="Informações Adicionais da aplicação\script para criar tabela de usuário.sql" />
+    <Content Include="Informações Adicionais da aplicação\Script Sql - TabelaUsuario\script para criar tabela de usuário.sql" />
+    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\create table tab_grupo_produto.sql" />
+    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto.sql" />
+    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto_Alterar.sql" />
+    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto_DeletarPorId.sql" />
+    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto_GetById.sql" />
+    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto_Salvar.sql" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
