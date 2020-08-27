@@ -133,6 +133,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Cryptography.cs" />
     <Compile Include="Interface\ICrud.cs" />
     <Compile Include="Models\Base\AbstractEntidadeDominio.cs" />
     <Compile Include="Models\ConexaoBanco.cs" />

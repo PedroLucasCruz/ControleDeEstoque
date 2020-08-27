@@ -77,14 +77,19 @@ namespace ControleEstoque.Controllers
                 //Nesse trecho você valida se a URL passado como parametro está 
                 //dentro do dominio da aplicação
                 //Caso não esteja dentro do dominio redireciona pra home
-                if (Url.IsLocalUrl(returnUrl))
+
+                if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                       && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                 {
-                    return Redirect(returnUrl);
-                }
+                    //if (Url.IsLocalUrl(returnUrl))
+                    //{
+                        return Redirect(returnUrl);
+                    //}
+                }               
                 else
                 {
                     //RedirectToAction redireciona o fluxo para o action Index dentro do controller Home
-                    RedirectToAction("Index", "Home");
+                  return  RedirectToAction("Index", "Home");
                 }
             }
             //Este Else mostra uma mensagem de validação caso os dados de credenciais

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControleEstoque.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace ControleEstoque.Models
             //String format pegar as variaveis definidas nos campos com '{}' e alinha o que vc digitar sequencialmente
             //Nessa linha você retorna o a quantidade de linhas encontradas no banco de dados de acordo com os parametros informados
             #endregion
-            comando.CommandText = string.Format("Select count(*) from Usuario where Login like '{0}' and Senha like '{1}'", Login, Senha);
+            comando.CommandText = string.Format("Select count(*) from Usuario where Login like '{0}' and Senha like '{1}'", Login, Cryptography.HashMd5(Senha));
 
             #region
             //Quando você precisa retornar valor você utilizar o ExecuteScalar que está dentro do comando
