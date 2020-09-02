@@ -224,7 +224,7 @@
                 //toLowerCase converte o retorno do tipo String para que todas as letras fiquem minusculas
                 // === "true" compara se o elemento de retorno é true, caso seja retorna true se não retorna false
                 CheckBox = (btn.closest('tr').find('#checkedativo').val().toLowerCase() === "true")
-
+                
                 url = '@Url.Action("RecuperarGrupoProduto","Cadastro")',
                     console.log(btn.val)
 
@@ -333,7 +333,8 @@
                         //.eq(1).append('<input id="checkedativo" name="checkedativo" type="checkbox" value="true" />');
                         //.eq(1).html(param.Ativo ? 'SIM' : 'NÃO');
 
-                    } else if (response.Mensagens.length > 0) {
+                    }
+                    else if (response.Mensagens.length > 0) {
                         //Quando você faz um append, voc~e está acrecentando um elemento dentro
                         //o que esta sendo passado como parametro são varias mensagens dentro do atributo mensagem
                         $('#msg_mensagem_aviso').html(formatar_mensagem_aviso(response.Mensagens));
@@ -368,32 +369,36 @@
 
                     //Caso o retorno do backend seja "OK" na validação de mensagem
                     //ele executado o proximo bloco de código conforme abaixo
-                    if (data.Obj.length > 0) {
-
-                      //  if (param.Id == 0) {
+                    //if (data.Obj.length > 0) {
+                    if(!$.isEmptyObject(data.Obj.entidades))
+                    {
+                            //  if (param.Id == 0) {
                             param.Id = data.idSalvo;
                             var table = $('#grid_cadastro').find('tbody');
                             var linha = criar_linha_grid(data);
                             table.append(linha);
                       
-
                     }
-                    else if(data.Resultado == "ERROR"){
-                        $('#msg_aviso').hide();
-                        $('#msg_mensagem_aviso').hide();
-                        $('#msg_erro').show();
-                    }
-                    else if (data.Obj.Mensagens == "AVISO") {
+                    else if (data.Mensagens.length > 0) {
                         //Quando você faz um append, voc~e está acrecentando um elemento dentro
                         //o que esta sendo passado como parametro são varias mensagens dentro do atributo mensagem
                         $('#msg_mensagem_aviso').html(formatar_mensagem_aviso(data.Mensagens));
                         $('#msg_aviso').show();
                         $('#msg_mensagem_aviso').show();
                         $('#msg_erro').hide();
-                    }
+                    };
+
+                    if ($.isEmptyObject(data.Mensagens)) {
+                        $('#msg_mensagem_aviso').hide();
+                        $('#msg_aviso').hide();
+                        $('#msg_mensagem_aviso').hide();
+                        $('#msg_erro').hide();
+
+                        $('#modal_cadastro').parents('.bootbox').modal('hide');
+                    };
                 }
             });
-                $('#modal_cadastro').parents('.bootbox').modal('hide');
+                //$('#modal_cadastro').parents('.bootbox').modal('hide');
             }          
 
         });

@@ -17,5 +17,21 @@ namespace ControleEstoque
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+
+            if (ex is HttpRequestValidationException)
+            {
+                Response.Clear();
+                Response.StatusCode = 200;
+                Response.ContentType = "application/json";
+                Response.Write("{ \"Mensagens\":[\"Somente textos sem caracteres especiais podem ser enviados.\"],\"Obj\":\"\"}");
+                Response.End();
+            }
+        }
+
+
     }
 }
