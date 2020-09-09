@@ -31,6 +31,13 @@ namespace ControleEstoque
                 Response.Write("{ \"Mensagens\":[\"Somente textos sem caracteres especiais podem ser enviados.\"],\"Obj\":\"\"}");
                 Response.End();
             }
+            else if(ex is HttpAntiForgeryException)
+            {
+                Response.Clear();
+                Response.StatusCode = 200;             
+                Response.End();
+                //Log no banco pode ser inputado aqui para auditoria de sistema de segurança
+            }
         }
     }
 }
