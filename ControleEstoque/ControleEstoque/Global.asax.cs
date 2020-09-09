@@ -17,7 +17,8 @@ namespace ControleEstoque
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-
+        
+        //Tratamento de erro 200 retornado do servidor 
         void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError();
@@ -31,7 +32,5 @@ namespace ControleEstoque
                 Response.End();
             }
         }
-
-
     }
 }

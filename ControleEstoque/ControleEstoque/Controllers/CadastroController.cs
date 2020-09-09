@@ -58,8 +58,9 @@ namespace ControleEstoque.Controllers
             return View(lista);
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpPost] //[HttpPost] denota que o verbo da chamada é do tipo post, ou seja, passa parametro e também pode retornar dado
+        [Authorize]//Verifica a autorização de acesso para o controller pedido vendo se esta logado ou não
+        [ValidateAntiForgeryToken] // Valida o Token de acesso pego na view para que não seja criado uma requisição fake de pagina usando a sessão atual do usuário
         public ActionResult RecuperarGrupoProduto(int id)
         {
             return Json(ListaGrupoProduto.Find(x => x.Id == id));
@@ -67,6 +68,7 @@ namespace ControleEstoque.Controllers
 
         [HttpPost]
         [Authorize]
+       [ValidateAntiForgeryToken]
         public ActionResult ExcluirGrupoProduto(GrupoProdutoModel entidade)
         {
             
@@ -107,6 +109,9 @@ namespace ControleEstoque.Controllers
             #endregion 
         }
 
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)
         {
             var callback = new Result<GrupoProdutoModel>();
@@ -227,7 +232,9 @@ namespace ControleEstoque.Controllers
 
             return Json(new {Obj = callback.entidades, Mensagens = callback.mensagens});
         }
-
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public ActionResult AlterarGrupoProduto(GrupoProdutoModel model)
         {
             var callBack = new Result<GrupoProdutoModel>();

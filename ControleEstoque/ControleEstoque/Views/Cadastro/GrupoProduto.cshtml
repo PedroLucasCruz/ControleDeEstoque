@@ -74,6 +74,7 @@
 
     </div>
     <fieldset>
+        @Html.AntiForgeryToken();
         <div class="row">
 
             <div class="form-group">
@@ -115,10 +116,14 @@
 
 <script>
 
-        function testeCheckBox(alter) {
-            console.log(alter.checked)
-        }
-
+    //function add_anti_forgery_token(data) {
+    //    data.__RequestVerificationToken = $('[name =AntiForgeryToken]').val();
+    //    return data;
+    //}   
+    function add_anti_forgery_token(data) {
+        data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
+        return data;
+    }
 
     //Essa função serve para criar a estrutura da tabela de uma linha a ser adicionada
 
@@ -237,7 +242,7 @@
 
             exibir_form(param)
 
-            //$.post(url, param, function (response) {
+            //$.post(url, add_anti_forgery_token(param), function (response) {
             //    if (response) {
             //        exibir_form(response)
             //    }
@@ -265,7 +270,7 @@
                 callback: function (result) {
                     if (result) {
 
-                        $.post(url, param, function (response) {
+                        $.post(url, add_anti_forgery_token(param), function (response) {
                             //Quando você encontrar a resposta o retorno do post ele executa a linha dentro do If
                             //acessa a propriedades em sequencia e retorna o valor de call para validar e remover a linha
                             var teste = parseInt(response[0].valueOf.__proto__.call.length)
@@ -304,7 +309,7 @@
 
             if (param.Id > 0) {
                let  url = '@Url.Action("AlterarGrupoProduto", "Cadastro")'
-                $.post(url, param, function (response) {
+                $.post(url, add_anti_forgery_token(param), function (response) {
                     if (!$.isEmptyObject(response.Obj.entidades)) {
 
                      //essa linda corresponde ao objeto que devera ser manipulado, em especifico ao TD
@@ -360,11 +365,11 @@
             }
             else
             {
-
+              
             $.ajax({
                 url: '@Url.Action("SalvarGrupoProduto", "Cadastro")',
                 type: 'POST',
-                data: param,
+                data: add_anti_forgery_token(param),
                 success: function (data) {
 
                     //Caso o retorno do backend seja "OK" na validação de mensagem
@@ -379,7 +384,7 @@
                             table.append(linha);
                       
                     }
-                    else if (data.Mensagens.length > 0) {
+                    else if (!$.isEmptyObject(data.Mensagens)) {
                         //Quando você faz um append, voc~e está acrecentando um elemento dentro
                         //o que esta sendo passado como parametro são varias mensagens dentro do atributo mensagem
                         $('#msg_mensagem_aviso').html(formatar_mensagem_aviso(data.Mensagens));

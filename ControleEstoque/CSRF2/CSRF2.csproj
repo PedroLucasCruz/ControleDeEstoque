@@ -8,17 +8,17 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7AD0A7C4-07BF-4D57-AADF-557AED25D55B}</ProjectGuid>
+    <ProjectGuid>{F32D566E-A4AA-4E17-BD96-C05C7BABAC40}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ControleEstoque</RootNamespace>
-    <AssemblyName>ControleEstoque</AssemblyName>
+    <RootNamespace>CSRF2</RootNamespace>
+    <AssemblyName>CSRF2</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44323</IISExpressSSLPort>
+    <IISExpressSSLPort>44379</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -120,29 +120,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Business\Base\AbstractBusiness.cs" />
-    <Compile Include="Business\Base\Result.cs" />
-    <Compile Include="Business\GrupoProdutoB.cs" />
-    <Compile Include="Controllers\CadastroController.cs" />
-    <Compile Include="Controllers\ContaController.cs" />
-    <Compile Include="Controllers\GraficoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\OperacaoController.cs" />
-    <Compile Include="Controllers\RelatorioController.cs" />
-    <Compile Include="DAO\GrupoProdutoDao.cs" />
+    <Compile Include="Controllers\TesteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Cryptography.cs" />
-    <Compile Include="Interface\ICrud.cs" />
-    <Compile Include="Models\Base\AbstractEntidadeDominio.cs" />
-    <Compile Include="Models\ConexaoBanco.cs" />
-    <Compile Include="DAO\Base\DAOAbstract.cs" />
-    <Compile Include="Models\GrupoProdutoModel.cs" />
-    <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\GropoProdutoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -153,23 +136,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Informações Adicionais da aplicação\anotação importante do projeto.txt" />
-    <Content Include="Informações Adicionais da aplicação\Configurações de conta do banco de dados SQL server.txt" />
-    <Content Include="Informações Adicionais da aplicação\Script Sql - TabelaUsuario\script para criar tabela de usuário.sql" />
-    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\create table tab_grupo_produto.sql" />
-    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto.sql" />
-    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto_Alterar.sql" />
-    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto_DeletarPorId.sql" />
-    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto_GetById.sql" />
-    <Content Include="Informações Adicionais da aplicação\Script Sql - GrupoProduto\STP_GrupoProduto_Salvar.sql" />
-    <Content Include="Informações Adicionais da aplicação\segurança na informação.txt" />
-    <Content Include="Scripts\bootbox.js" />
-    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Informações Adicionais da aplicação\Aulas controle de estoque C#.pptx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\AcaoTabela.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -191,32 +160,14 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Sobre.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Cadastro\GrupoProduto.cshtml" />
-    <Content Include="Views\Cadastro\Usuario.cshtml" />
-    <Content Include="Views\Cadastro\LocalProduto.cshtml" />
-    <Content Include="Views\Cadastro\EntradaSaidasMes.cshtml" />
-    <Content Include="Views\Cadastro\Produto.cshtml" />
-    <Content Include="Views\Cadastro\Pais.cshtml" />
-    <Content Include="Views\Cadastro\Estado.cshtml" />
-    <Content Include="Views\Cadastro\Cidade.cshtml" />
-    <Content Include="Views\Cadastro\Fornecedor.cshtml" />
-    <Content Include="Views\Cadastro\PerfilUsuario.cshtml" />
-    <Content Include="Views\Cadastro\MarcaProduto.cshtml" />
-    <Content Include="Views\Grafico\EntradaSaidaMes.cshtml" />
-    <Content Include="Views\Grafico\PerdaMes.cshtml" />
-    <Content Include="Views\Relatorio\Ressuprimento.cshtml" />
-    <Content Include="Views\Relatorio\PosicaoEstoque.cshtml" />
-    <Content Include="Views\Operacao\Inventario.cshtml" />
-    <Content Include="Views\Operacao\LancPerdaProduto.cshtml" />
-    <Content Include="Views\Operacao\EntradaEstoque.cshtml" />
-    <Content Include="Views\Operacao\SaidaEstoque.cshtml" />
-    <Content Include="Views\Cadastro\UnidadeMedida.cshtml" />
-    <Content Include="Views\Conta\Login.cshtml" />
+    <Content Include="Views\Teste\Teste.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -247,9 +198,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>57510</DevelopmentServerPort>
+          <DevelopmentServerPort>62392</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44323/</IISUrl>
+          <IISUrl>https://localhost:44379/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
