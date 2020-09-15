@@ -17,6 +17,8 @@ namespace ControleEstoque.Business.Base
         
         public bool callBackBool { get; set; }
         
+
+        //Contrutores
         public Result(List<T> entidadeT)
         {
             this.entidades = entidadeT;

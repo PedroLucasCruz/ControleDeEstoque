@@ -12,8 +12,8 @@ namespace ControleEstoque.Models
 {
     public class UsuarioModel
     {
-        public static bool ValidarUsuario(String Login, String Senha)
-        {
+        public static bool ValidarLogin(String Login, String Senha)
+        {   
             var ret = false;
 
             #region
@@ -51,7 +51,7 @@ namespace ControleEstoque.Models
             //String format pegar as variaveis definidas nos campos com '{}' e alinha o que vc digitar sequencialmente
             //Nessa linha você retorna o a quantidade de linhas encontradas no banco de dados de acordo com os parametros informados
             #endregion
-            comando.CommandText = string.Format("Select count(*) from Usuario where Login = @login and Senha = @Senha ");
+            comando.CommandText = string.Format("Select count(*) from Logins where Login = @login and Senha = @Senha ");
             
             comando.Parameters.Add("@login", SqlDbType.VarChar).Value = Login;
             comando.Parameters.Add("@Senha", SqlDbType.VarChar).Value = Cryptography.HashMd5(Senha);

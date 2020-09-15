@@ -65,7 +65,7 @@ namespace ControleEstoque.Controllers
             //Foi encontrado na base de dados ficticia
             //Variavel tipada de acordo com o retorno
             // var achou = (login.Usuario == "Pedro" && login.Senha == "123");
-            var achou = UsuarioModel.ValidarUsuario(login.Usuario, login.Senha);
+            var achou = UsuarioModel.ValidarLogin(login.Usuario, login.Senha);
                     
 
             if (achou)
