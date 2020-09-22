@@ -12,7 +12,7 @@ namespace ControleEstoque.Business
     {
         public GrupoProdutoB(HttpRequestBase request) : base(request, new GrupoProdutoDao(), new Result<GrupoProdutoModel>())
         {
-
+            
         }
 
         public override Result<GrupoProdutoModel> Alterar(GrupoProdutoModel grupoProdutoModel)

@@ -10,11 +10,19 @@
 </head>
 <body>
 
+ 
 
-    <h2>Usuario</h2>
+    <h2> <i class="glyphicon glyphicon-user">  </i> USUÁRIOS </h2>
 
     <table id="grid_usuario" class="table table-bordered table-striped table-hover">
-        <caption>Lista de Usuarios</caption>
+        <hr>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" placeholder="Adicionar">
+            <i class="glyphicon glyphicon-plus">  </i>
+        </button>
+        <hr>
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -34,7 +42,7 @@
                 <td>Básico</td>
                 <td>
 
-                    <a class="btn btn-success btn-excluir" role="button"> <i class=" glyphicon glyphicon-list">  </i> </a>
+                    <a class="btn btn-warning" role="button"> <i class="glyphicon glyphicon-pencil">  </i>  </a>
                     <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash">  </i> </a>
                 </td>
             </tr>
@@ -46,7 +54,7 @@
                 <td>Médio</td>
 
                 <td>
-                    <a class="btn btn-success btn-excluir" role="button"> <i class=" glyphicon glyphicon-list">  </i> </a>
+                    <a class="btn btn-warning" role="button"> <i class="glyphicon glyphicon-pencil">  </i>  </a>
                     <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash">  </i> </a>
                 </td>
             </tr>
@@ -58,7 +66,7 @@
                 <td>Avançado</td>
 
                 <td>
-                    <a class="btn btn-success btn-excluir" role="button"> <i class=" glyphicon glyphicon-list">  </i> </a>
+                    <a class="btn btn-warning" role="button"> <i class="glyphicon glyphicon-pencil">  </i>  </a>
                     <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash">  </i> </a>
                 </td>
             </tr>
@@ -71,7 +79,7 @@
 
                 <td>
 
-                    <a class="btn btn-success" role="button" data-toggle="modal" data-target="#exampleModalCenter"> <i class=" glyphicon glyphicon-list">  </i> </a>
+                    <a class="btn btn-warning" role="button" data-toggle="modal" data-target="#exampleModalCenter"> <i class="glyphicon glyphicon-pencil">  </i> </a>
                     <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash">  </i> </a>
                 </td>
             </tr>
@@ -80,77 +88,158 @@
     </table>
 
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        Launch demo modal
-    </button>
-
-    <!-- Modal -->
+    <!-- Modal dados do usuário -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
+
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Formulário de usuário</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
-                    <form class="col-sm-6 col-md-12 col-lg-12">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Email</label>
-                                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputPassword4">Password</label>
-                                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                            </div>
+                    <form class="c">
+
+                        <div class="form-group col-md-6">
+                            <label for="inputNome">Nome</label>
+                            <input type="text" class="form-control" id="inputText" placeholder="Nome">
                         </div>
-                        <div class="form-group col-lg-12">
-                            <label for="inputAddress">Address</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+
+                        <div class="form-group col-md-6">
+                            <label for="inputSobreNome">Sobre Nome</label>
+                            <input type="text" class="form-control" id="inputSobreNome" placeholder="Sobre Nome">
                         </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail">Email</label>
+                            <input type="text" class="form-control" id="inputEmail" placeholder="E-mail">
+                        </div>
+
                         <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
-                            <label for="inputAddress2">Address 2</label>
-                            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                            <label for="inputTelefone">Telefone</label>
+                            <input type="text" class="form-control" id="inputTelefone" placeholder="Telefone">
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
-                                <label for="inputCity">City</label>
-                                <input type="text" class="form-control" id="inputCity">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="inputState">State</label>
-                                <select id="inputState" class="form-control">
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="inputZip">Zip</label>
-                                <input type="text" class="form-control" id="inputZip">
-                            </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputCelular">Celular</label>
+                            <input type="text" class="form-control" id="inputCelular" placeholder="Celular">
                         </div>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
-                                <label class="form-check-label" for="gridCheck">
-                                    Check me out
-                                </label>
-                            </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputCnpj">Cnpj</label>
+                            <input type="text" class="form-control" id="inputCnpj" placeholder="CNPJ">
                         </div>
-                        <button type="submit" class="btn btn-primary">Sign in</button>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputCpf">CPF</label>
+                            <input type="text" class="form-control" id="inputCpf" placeholder="CPF">
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                            <label for="InputRg">RG</label>
+                            <input type="text" class="form-control" id="InputRg" placeholder="RG">
+                        </div>
+
+                        <div class="form-group col-lg-6 col-sm-6 col-md-6">
+                            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modalEndereco">
+                                <i class="glyphicon glyphicon-home">  </i>
+                                Endereço
+                            </button>
+                        </div>
                     </form>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    
+                    <button type="button"class="btn btn-danger" data-dismiss="modal"><i class="glyphicon glyphicon-remove">  </i></button>
+                    <button type="button" class="btn btn-primary"> <i class="glyphicon glyphicon-ok">  </i></button>
                 </div>
+
             </div>
         </div>
     </div>
 
+
+    @*Modal dados de Endereço*@
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEndereco" aria-hidden="true" id="modalEndereco">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Endereço do usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="c">
+
+                        <div class="form-group col-md-6">
+                            <label for="inputPais">País</label>
+                            <select id="inputPais" class="form-control">
+                                <option selected>Selecione</option>
+                                <option>Brasil</option>
+                                <option>EUA</option>
+                                <option>Canadá</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputRua">Rua: </label>
+                            <input type="text" class="form-control" id="inputRua" placeholder="Rua">
+                        </div>
+
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                            <label for="inputNumero">Número: </label>
+                            <input type="text" class="form-control" id="inputNumero" placeholder="Número">
+                        </div>
+
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                            <label for="InputComplemento">Complemento</label>
+                            <input type="text" class="form-control" id="InputComplemento" placeholder="Complemento">
+                        </div>
+
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3 ">
+                            <label for="inputCep">CEP: </label>
+                            <input type="text" class="form-control" id="inputCep" placeholder="CEP">
+                        </div>
+
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                            <label for="inputEstado">UF: </label>
+                            <select id="inputPais" class="form-control">
+                                <option selected>Selecione</option>
+                                <option>Brasil</option>
+                                <option>EUA</option>
+                                <option>Canadá</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputCidade">Cidade: </label>
+                            <input type="text" class="form-control" id="inputCidade" placeholder="Cidade">
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputBairro">Bairro</label>
+                            <input type="text" class="form-control" id="inputBairro" placeholder="Bairro">
+                        </div>
+
+                        <div class="modal-footer ">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

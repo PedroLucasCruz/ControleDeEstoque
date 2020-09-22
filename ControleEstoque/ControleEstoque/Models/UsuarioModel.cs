@@ -40,7 +40,7 @@ namespace ControleEstoque.Models
             //Para usar o comando você precisa estanciar lo antes de tudo
             #endregion
             var comando = new SqlCommand(); //Nesta sessão foi retirado o Using que estava isolando a estancia
-          
+            
             #region
             //Aqui você associa a sua conexão com o seu comando 
             #endregion
