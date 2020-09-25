@@ -12,14 +12,14 @@ namespace ControleEstoque.Business
     {
         public GrupoProdutoB(HttpRequestBase request) : base(request, new GrupoProdutoDao(), new Result<GrupoProdutoModel>())
         {
-           
+            
         }
-        
+
         public override Result<GrupoProdutoModel> Alterar(GrupoProdutoModel grupoProdutoModel)
         {
             try
             {
-                base.Alterar(grupoProdutoModel);
+               return base.Alterar(grupoProdutoModel);
             }
             catch
             {
@@ -30,9 +30,10 @@ namespace ControleEstoque.Business
 
         public override Result<GrupoProdutoModel> Salvar(GrupoProdutoModel grupoProdutoModel)
         {
+
             try
             {
-                base.Salvar(grupoProdutoModel);
+              return  base.Salvar(grupoProdutoModel);
             }
             catch
             {
@@ -45,7 +46,7 @@ namespace ControleEstoque.Business
         {
             try
             {
-             return  base.Listar();
+                return base.Listar();
             }
             catch
             {
@@ -58,26 +59,28 @@ namespace ControleEstoque.Business
         {
             try
             {
-                base.Excluir(grupoProdutoModel);
+                return base.Excluir(grupoProdutoModel);
             }
             catch
             {
                 base.result.mensagens.Add("Erro ao excluir item");
+                return result;
             }
-            return result;
+
         }
 
         public override Result<GrupoProdutoModel> GetById(GrupoProdutoModel grupoProdutoModel)
         {
             try
             {
-                base.GetById(grupoProdutoModel);
+                return base.GetById(grupoProdutoModel);
             }
             catch
             {
                 base.result.mensagens.Add("Erro ao retornar objeto por Id");
+                return result;
             }
-            return result;
+
         }
 
     }

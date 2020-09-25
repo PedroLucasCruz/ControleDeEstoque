@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Antlr.Runtime.Tree;
+using ControleEstoque.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace ControleEstoque.Models
 {
     public class UsuarioModel
     {
-        public static bool ValidarUsuario(String Login, String Senha)
-        {
+        public static bool ValidarLogin(String Login, String Senha)
+        {   
             var ret = false;
 
             #region
@@ -36,7 +40,7 @@ namespace ControleEstoque.Models
             //Para usar o comando você precisa estanciar lo antes de tudo
             #endregion
             var comando = new SqlCommand(); //Nesta sessão foi retirado o Using que estava isolando a estancia
-
+            
             #region
             //Aqui você associa a sua conexão com o seu comando 
             #endregion
@@ -47,8 +51,11 @@ namespace ControleEstoque.Models
             //String format pegar as variaveis definidas nos campos com '{}' e alinha o que vc digitar sequencialmente
             //Nessa linha você retorna o a quantidade de linhas encontradas no banco de dados de acordo com os parametros informados
             #endregion
-            comando.CommandText = string.Format("Select count(*) from Usuario where Login like '{0}' and Senha like '{1}'", Login, Senha);
-
+            comando.CommandText = string.Format("Select count(*) from Logins where Login = @login and Senha = @Senha ");
+            
+            comando.Parameters.Add("@login", SqlDbType.VarChar).Value = Login;
+            comando.Parameters.Add("@Senha", SqlDbType.VarChar).Value = Cryptography.HashMd5(Senha);
+            
             #region
             //Quando você precisa retornar valor você utilizar o ExecuteScalar que está dentro do comando
             //No caso da query a cima você está retornando um valor inteiro

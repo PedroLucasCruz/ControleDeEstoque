@@ -1,0 +1,245 @@
+﻿
+@{
+    ViewBag.Title = "Usuario";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <title></title>
+</head>
+<body>
+
+ 
+
+    <h2> <i class="glyphicon glyphicon-user">  </i> USUÁRIOS </h2>
+
+    <table id="grid_usuario" class="table table-bordered table-striped table-hover">
+        <hr>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" placeholder="Adicionar">
+            <i class="glyphicon glyphicon-plus">  </i>
+        </button>
+        <hr>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Sobre Nome</th>
+                <th scope="col">Cargo</th>
+                <th scope="col">Permissão</th>
+                <th scope="col">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>fat</td>
+                <td>Básico</td>
+                <td>
+
+                    <a class="btn btn-warning" role="button"> <i class="glyphicon glyphicon-pencil">  </i>  </a>
+                    <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash">  </i> </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>fat</td>
+                <td>Médio</td>
+
+                <td>
+                    <a class="btn btn-warning" role="button"> <i class="glyphicon glyphicon-pencil">  </i>  </a>
+                    <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash">  </i> </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>fat</td>
+                <td>Avançado</td>
+
+                <td>
+                    <a class="btn btn-warning" role="button"> <i class="glyphicon glyphicon-pencil">  </i>  </a>
+                    <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash">  </i> </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>fat</td>
+                <td>Personalizado</td>
+
+                <td>
+
+                    <a class="btn btn-warning" role="button" data-toggle="modal" data-target="#exampleModalCenter"> <i class="glyphicon glyphicon-pencil">  </i> </a>
+                    <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash">  </i> </a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <!-- Modal dados do usuário -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Formulário de usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="c">
+
+                        <div class="form-group col-md-6">
+                            <label for="inputNome">Nome</label>
+                            <input type="text" class="form-control" id="inputText" placeholder="Nome">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputSobreNome">Sobre Nome</label>
+                            <input type="text" class="form-control" id="inputSobreNome" placeholder="Sobre Nome">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail">Email</label>
+                            <input type="text" class="form-control" id="inputEmail" placeholder="E-mail">
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputTelefone">Telefone</label>
+                            <input type="text" class="form-control" id="inputTelefone" placeholder="Telefone">
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputCelular">Celular</label>
+                            <input type="text" class="form-control" id="inputCelular" placeholder="Celular">
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputCnpj">Cnpj</label>
+                            <input type="text" class="form-control" id="inputCnpj" placeholder="CNPJ">
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputCpf">CPF</label>
+                            <input type="text" class="form-control" id="inputCpf" placeholder="CPF">
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                            <label for="InputRg">RG</label>
+                            <input type="text" class="form-control" id="InputRg" placeholder="RG">
+                        </div>
+
+                        <div class="form-group col-lg-6 col-sm-6 col-md-6">
+                            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modalEndereco">
+                                <i class="glyphicon glyphicon-home">  </i>
+                                Endereço
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    
+                    <button type="button"class="btn btn-danger" data-dismiss="modal"><i class="glyphicon glyphicon-remove">  </i></button>
+                    <button type="button" class="btn btn-primary"> <i class="glyphicon glyphicon-ok">  </i></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    @*Modal dados de Endereço*@
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEndereco" aria-hidden="true" id="modalEndereco">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Endereço do usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="c">
+
+                        <div class="form-group col-md-6">
+                            <label for="inputPais">País</label>
+                            <select id="inputPais" class="form-control">
+                                <option selected>Selecione</option>
+                                <option>Brasil</option>
+                                <option>EUA</option>
+                                <option>Canadá</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputRua">Rua: </label>
+                            <input type="text" class="form-control" id="inputRua" placeholder="Rua">
+                        </div>
+
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                            <label for="inputNumero">Número: </label>
+                            <input type="text" class="form-control" id="inputNumero" placeholder="Número">
+                        </div>
+
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                            <label for="InputComplemento">Complemento</label>
+                            <input type="text" class="form-control" id="InputComplemento" placeholder="Complemento">
+                        </div>
+
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3 ">
+                            <label for="inputCep">CEP: </label>
+                            <input type="text" class="form-control" id="inputCep" placeholder="CEP">
+                        </div>
+
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                            <label for="inputEstado">UF: </label>
+                            <select id="inputPais" class="form-control">
+                                <option selected>Selecione</option>
+                                <option>Brasil</option>
+                                <option>EUA</option>
+                                <option>Canadá</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputCidade">Cidade: </label>
+                            <input type="text" class="form-control" id="inputCidade" placeholder="Cidade">
+                        </div>
+
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
+                            <label for="inputBairro">Bairro</label>
+                            <input type="text" class="form-control" id="inputBairro" placeholder="Bairro">
+                        </div>
+
+                        <div class="modal-footer ">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/Usuario/Usuario.js">  </script>
+</body>
+</html>
