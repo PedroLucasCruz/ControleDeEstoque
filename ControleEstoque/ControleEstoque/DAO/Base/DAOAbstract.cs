@@ -34,8 +34,7 @@ namespace ControleEstoque.Models
         protected Result<T> result;
 
         protected bool conectar()
-        {
-            
+        {           
 
             try
             {

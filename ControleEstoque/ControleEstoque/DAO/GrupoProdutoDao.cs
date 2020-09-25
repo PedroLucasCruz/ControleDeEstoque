@@ -17,12 +17,9 @@ namespace ControleEstoque.DAO
 {
     public class GrupoProdutoDao : DAOabstract<GrupoProdutoModel>
     {
-
         public override Result<GrupoProdutoModel> Alterar(GrupoProdutoModel entidade)
         {
-
             Result<GrupoProdutoModel> result = new Result<GrupoProdutoModel>(new List<GrupoProdutoModel>());
-
             try
             {
                 base.conectar();
@@ -91,7 +88,6 @@ namespace ControleEstoque.DAO
                         result.entidades.Add(grupoProdutoModel);
                     }
                 }
-
             }
             return result;
         }

@@ -5,7 +5,34 @@
 
         event.preventDefault();
 
-        let vResponse = POST('/controller/actionDoController', JSON.stringify(gObjects.Filtro()));
+
+        $.ajax({
+            url: '/Usuario/UsuariosListar',  //URL solicitada
+            success: function (data) { //O HTML é retornado em 'data'
+                alert(data); //Se sucesso um alert com o conteúdo retornado pela URL solicitada será exibido.
+                console.log(data.Obj);  
+                alert("entrou");
+            }
+        });
+
+        //var ajax = new XMLHttpRequest();
+        //// Seta tipo de requisição e URL com os parâmetros
+        //ajax.open("GET", "/Usuario/UsuariosListar", true);
+        //// Envia a requisição
+        //ajax.send();
+        //// Cria um evento para receber o retorno.
+        //ajax.onreadystatechange = function () {
+
+        //    // Caso o state seja 4 e o http.status for 200, é porque a requisiçõe deu certo.
+        //    if (ajax.readyState == 4 && ajax.status == 200) {
+
+        //        var data = ajax.responseText;
+
+        //        // Retorno do Ajax
+        //        console.log(data);
+        //    }
+        //}
+
 
         if (vResponse.Status) {
             gVariable.ListTabela = vResponse.Response;

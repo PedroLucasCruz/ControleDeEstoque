@@ -183,14 +183,14 @@
         function criar_linha_grid(dados) {
 
             //Utilizado para jogar o parametro de exibição no check da tabela
-            var checkValor = dados.Obj[0].Ativo ? 'checked' : 'unchecked';
+            var checkValor = dados.Obj.entidades[0].Ativo ? 'checked' : 'unchecked';
             
-            $('#id_cadastro').val(dados.Obj[0].Id);
+            $('#id_cadastro').val(dados.Obj.entidades[0].Id);
             var retorno =
-                '<tr data-id=' + dados.Obj[0].Id + '>' +
-                '<td data-nome="'+dados.Obj[0].Nome+'">' + dados.Obj[0].Nome + '</td>' +
-                '<td>' + '<input id = "checkedativo" name = "checkedativo" value="'+dados.Obj[0].Ativo+'"   type = "checkbox" ' + checkValor +' hidden/> '
-                 + (dados.Obj[0].Ativo ? 'SIM' : 'NÃO') + '</td>' +
+                '<tr data-id=' + dados.Obj.entidades[0].Id + '>' +
+                '<td data-nome="' + dados.Obj.entidades[0].Nome + '">' + dados.Obj.entidades[0].Nome + '</td>' +
+                '<td>' + '<input id = "checkedativo" name = "checkedativo" value="' + dados.Obj.entidades[0].Ativo+'"   type = "checkbox" ' + checkValor +' hidden/> '
+                + (dados.Obj.entidades[0].Ativo ? 'SIM' : 'NÃO') + '</td>' +
                 '<td>' +
 
                 '<a class="btn btn-primary btn-alterar" role="button" style="margin-right: 3px"> <i class="glyphicon glyphicon-pencil"> Alterar </i> </a>'+
@@ -310,7 +310,7 @@
             if (param.Id > 0) {
                let  url = '@Url.Action("AlterarGrupoProduto", "Cadastro")'
                 $.post(url, add_anti_forgery_token(param), function (response) {
-                    if (!$.isEmptyObject(response.Obj.entidades)) {
+                    if (!$.isEmptyObject(response.Obj)) {
 
                      //essa linda corresponde ao objeto que devera ser manipulado, em especifico ao TD
                      //sem seguida com a propriedade .html vc inputa o valor do objeto que deseja passar
@@ -375,7 +375,7 @@
                     //Caso o retorno do backend seja "OK" na validação de mensagem
                     //ele executado o proximo bloco de código conforme abaixo
                     //if (data.Obj.length > 0) {
-                    if(!$.isEmptyObject(data.Obj.entidades))
+                    if(!$.isEmptyObject(data.Obj))
                     {
                             //  if (param.Id == 0) {
                             param.Id = data.idSalvo;

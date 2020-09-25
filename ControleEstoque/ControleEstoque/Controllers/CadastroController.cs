@@ -114,15 +114,15 @@ namespace ControleEstoque.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)
         {
-            var callback = new Result<GrupoProdutoModel>();
+            var callBack = new Result<GrupoProdutoModel>();
 
             if (!ModelState.IsValid)
             {
-                callback.mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();            
+                callBack.mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();            
             }
             else
             {
-                callback = new GrupoProdutoB(HttpContext.Request).Salvar(model);               
+                callBack = new GrupoProdutoB(HttpContext.Request).Salvar(model);               
             }
 
             #region
@@ -230,7 +230,7 @@ namespace ControleEstoque.Controllers
             //#endregion
             #endregion
 
-            return Json(new {Obj = callback.entidades, Mensagens = callback.mensagens});
+            return Json(new {Obj = callBack, Mensagens = callBack.mensagens});
         }
         [HttpPost]
         [Authorize]
