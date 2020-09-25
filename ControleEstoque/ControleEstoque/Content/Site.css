@@ -33,6 +33,14 @@ textarea {
     text-transform: uppercase;
 }
 
+
+/*-----INICIO------CADASTRO GRUPO DE PRODUTO-------------------*/
+#grid_cadastro > tbody > tr td {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+
 #grid_cadastro > thead > tr th:nth-child(2) {
     width: 110px;
 }
@@ -60,4 +68,16 @@ textarea {
 
 .invisivel{
 display: none;
+}
+/*-----FIM------CADASTRO GRUPO DE PRODUTO--------------------*/
+
+/*-----INICIOS------CADASTRO DE USUARIO--------------------*/
+
+#grid_usuario > thead > tr th:nth-child(6) {
+    width: 102px;
+}
+
+#grid_usuario > tbody > tr td {
+    vertical-align: middle;
+    display: table-cell;
 }

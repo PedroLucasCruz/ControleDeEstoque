@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 using ControleEstoque.Business;
 using ControleEstoque.Interface;
 using ControleEstoque.Models;
@@ -32,41 +33,42 @@ namespace ControleEstoque.Business.Base
             catch
             {
                 result.mensagens.Add("Erro ao Alterar");
-            }
-            return result;           
+                return result;
+            }                       
         }
 
         public virtual Result<T> Excluir(T entidade)
-        {          
+        {
             try
             {
                 //result.entidadeT =  dao.Excluir(entidade);
                 //return result;      
                 return dao.Excluir(entidade);
+
             }
             catch
             {
-                  result.mensagens.Add("");           
+                result.mensagens.Add("");
             }
             return result;
         }
 
         public virtual Result<T> GetById(T entidade)
         {
-
             try
             {
-                dao.GetById(entidade);
+           return  dao.GetById(entidade);
             }
-            catch
+            catch(Exception ex)
             {
+                result.mensagens.Add(ex.Message);
                 result.mensagens.Add("Erro ao buscar por Id");
-            }
-            return result;
+                return result;
+            }            
         }
 
         public virtual Result<T> Listar()
-        {
+        {           
             try
             {
               return dao.Listar();
@@ -75,10 +77,8 @@ namespace ControleEstoque.Business.Base
             {
                 result.mensagens.Add(ex.Message);
                 result.mensagens.Add("Erro ao retornar todos os registros");
-            }
-            return result;
-            //dao.Listar();
-            //throw new NotImplementedException();
+                return result;
+            }                 
         }       
 
         public virtual Result<T> Salvar(T entidade)
@@ -86,13 +86,14 @@ namespace ControleEstoque.Business.Base
 
             try
             {
-                dao.Salvar(entidade);
+             return   dao.Salvar(entidade);
             }
             catch
             {
                 result.mensagens.Add("Falha");
+                return result;
             }
-            return result;
+            
             //throw new NotImplementedException();
         }
     }

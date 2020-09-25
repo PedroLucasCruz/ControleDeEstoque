@@ -78,7 +78,8 @@ namespace ControleEstoque.Controllers
             {
                 callBackEntidades = new GrupoProdutoB(HttpContext.Request).Excluir(entidade).entidades;
                 return Json(callBackEntidades, JsonRequestBehavior.AllowGet);
-            }        
+            }
+        
             return Json(callBackEntidades, JsonRequestBehavior.AllowGet);
             #region
             #region

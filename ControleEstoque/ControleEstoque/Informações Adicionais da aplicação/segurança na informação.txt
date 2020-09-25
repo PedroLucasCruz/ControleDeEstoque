@@ -1,0 +1,21 @@
+Segurança da informação
+
+1 - Sempre é recomendavel utilizar algoritmo de criptografia, eles mandem a segurança, a integridade a autenticidade e a disponibilidade do seu sreviço/aplicação. Algoritmo como por exemplo Hash(MD5) para manter a integridade do dados, e chaves publicas e primarias.
+
+3 - Ataques de SQL Injection são corrigidos trocando as consultas sql de tipo string para o modelo em uso de paramatros tanto em procedure como na própria aplicação como no exemploa baixo
+
+comando.Connection = conexao;
+comando.CommandText = "select * from grupo_produto where (id = @id)";
+comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
+
+4 - CSRF são ataques que mandam requisições para o banco de dados usando a mesma estrutura da sua aplicação para inputar os dados no banco, isso pode ser feito com uma tela auxiliar e o usuario logado na conta clica no botão que envia a requisição do tipo post.
+Para resolver os possíveis ataquesde CSRF você deve usar o ValidatorAntiFogeryToken que verifica se a view enviou um token valido pertence a aplicação em execução, impedindo assim que dados de qualquer outro lugar(view) entrem na sua aplicação.
+Além de configurar o ValidatorAntiFogeryToken na suas controllers, é preciso configurar a geração desse código nas  view, caso vc utilize chamadas assincronas o processo tera que ter o @Html.AntiForgeryToken(); para gerar o código de validação e mais a baixo no envio do posto da ferramenta, você tera que utilizar a função a baixo para pegar o tolken e envio para o backEnd validar, segue a função de uso
+
+function add_anti_forgery_token(data) 
+    {
+        data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
+        return data;
+    }
+
+ 

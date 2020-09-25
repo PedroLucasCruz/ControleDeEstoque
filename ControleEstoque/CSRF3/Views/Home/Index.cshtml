@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <h1>Clique aqui para enviar</h1>
+
+        <form action="https://localhost:44323/Cadastro/SalvarGrupoProduto" method="post">
+            
+            <input type="hidden" name="Id" value="2" />
+            <input type="hidden" name="Nome" value="Pedro" />
+            <input type="hidden" name="Ativo" value=true />
+            <input type="submit" class="btn btn-primary btn-lg" />
+        
+        </form>
+        
+    </body>
+    </html>

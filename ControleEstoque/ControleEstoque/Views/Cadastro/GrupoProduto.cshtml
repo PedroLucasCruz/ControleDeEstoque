@@ -11,7 +11,7 @@
     </section>
 
     <section id="cadastro_conteudo">
-    
+
         <div id="cabecalho_grid" class="row">
             <div class="col-md-12">
                 <a id="btn_incluir" class="btn btn-success" role="button">
@@ -36,20 +36,23 @@
                         @*para que você consigar ler esse tipo de dados com foreach ou qualquer laço de repetição
                             você tem que importar o Model em formato de lista como mostra o exemplo abaixo
                             @model List<ControleEstoque.Models.GrupoProdutoModel>
+                            data-nome="@item.Ativo"
                         *@
                         @foreach (var item in Model)
                         {
                             <tr data-id="@item.Id">
-                                <td> @item.Nome</td>
+                                <td data-nome="@item.Nome"> @item.Nome</td>
                                 <td>
+                                    @Html.CheckBox("checkedativo", @item.Ativo, new { @value = @item.Ativo, @hidden = true})
+
                                     @{
-                                        var ativo = (item.Ativo ? "SIM" : "NÃO");
+                                        var ativo = (item.Ativo ? "SIM" : "NÃO").Trim();
                                     }@ativo
                                 </td>
 
                                 <td>
 
-                                    <a class="btn btn-primary btn-alterar" role="button"> <i class="glyphicon glyphicon-pencil"> Alterar </i> </a>
+                                    <a class="btn btn-primary btn-alterar" role="button" onclick="teste(this)"> <i class="glyphicon glyphicon-pencil"> Alterar </i> </a>
                                     <a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash"> Excluir </i> </a>
                                 </td>
                             </tr>
@@ -63,14 +66,15 @@
     </section>
 </div>
 
-@Html.TextBox("id_cadastro")
-@Html.TextBox("teste_nome")
-@Html.CheckBox("teste_ativo")
+@Html.Hidden("id_cadastro")
+
+
 <div id="modal_cadastro" class="form-horizontal invisivel" role="dialog">
     <div id="msg_mensagem_aviso" class="text-danger invisivel">
-     
-    </div>    
+
+    </div>
     <fieldset>
+        @Html.AntiForgeryToken();
         <div class="row">
 
             <div class="form-group">
@@ -86,7 +90,7 @@
                     @Html.Label("lbl_ativo", "Ativo", new { @class = "col-md-3 control-label" })
                 </div>
                 <div class=".col-sm-6 col-md-6 col-lg-9 col-xl-9">
-                    @Html.CheckBox("cbx_ativo")
+                    @Html.CheckBox("cbx_ativo", false)
                 </div>
             </div>
         </div>
@@ -110,7 +114,16 @@
 
     @*<script src="~/Scripts/AcaoTabela.js"></script>*@
 
-    <script>
+<script>
+
+    //function add_anti_forgery_token(data) {
+    //    data.__RequestVerificationToken = $('[name =AntiForgeryToken]').val();
+    //    return data;
+    //}   
+    function add_anti_forgery_token(data) {
+        data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
+        return data;
+    }
 
     //Essa função serve para criar a estrutura da tabela de uma linha a ser adicionada
 
@@ -125,28 +138,6 @@
 
           limparCampoAviso();
 
-
-            @*var modal = $('#modal_cadastro');
-           $('#id_cadastro').val(dados.Id);
-            $('#txt_nome').val(dados.Nome);
-            $('#cbx_ativo').prop('checked', dados.Ativo);
-
-          var modal_cadastro = $('#modal_cadastro');
-
-            bootbox.dialog({
-                title: '@ViewBag.Title',
-                message: modal_cadastro
-            })
-            .on('shown.bs.modal', function () {
-                modal_cadastro.show(0, function () {
-                    $('#txt_nome').focus();
-                });
-            })
-            .on('hidden.bs.modal', function () {
-                modal_cadastro.hide().appendTo('body');
-            });*@
-
-
    //Aqui você pega toda a div marcado com Id="modal_cadastro"
     //joga ela para um variavel tipada para ser usado mais adiante na execução
           var modal = $('#modal_cadastro');
@@ -155,12 +146,14 @@
           var valor = JSON.stringify(dados);
           var novoObj = JSON.parse(valor);
 
-          $('#id_cadastro').val(dados.Id);
+          $('#id_cadastro').val(dados.id);
           $('#teste_nome').val(dados.Nome);
-          $('#teste_ativo').prop('checked', dados.Ativo);
+
+          $('#teste_ativo').prop(dados.Ativo);
 
           $('#txt_nome').val(dados.Nome);
-          $('#cbx_ativo').prop('checked', dados.Ativo);
+
+          $('#cbx_ativo').prop('checked', dados.Ativo)
 
    // Esse função bootbox.dialog é o que permite o inicio da manipulação da caixa modal
    // dentro da função dialog existe '{}' que representam os objetos para exibir no modal
@@ -188,64 +181,102 @@
         });
     }
         function criar_linha_grid(dados) {
-            $('#id_cadastro').val(dados.Id);
+
+            //Utilizado para jogar o parametro de exibição no check da tabela
+            var checkValor = dados.Obj.entidades[0].Ativo ? 'checked' : 'unchecked';
+            
+            $('#id_cadastro').val(dados.Obj.entidades[0].Id);
             var retorno =
-                '<tr data-id=' + dados.Obj.Id + '>' +
-                '<td>' + dados.Obj.Nome + '</td>' +
-                '<td>' + (dados.Obj.Ativo ? 'SIM' : 'NÃO') + '</td>' +
+                '<tr data-id=' + dados.Obj.entidades[0].Id + '>' +
+                '<td data-nome="' + dados.Obj.entidades[0].Nome + '">' + dados.Obj.entidades[0].Nome + '</td>' +
+                '<td>' + '<input id = "checkedativo" name = "checkedativo" value="' + dados.Obj.entidades[0].Ativo+'"   type = "checkbox" ' + checkValor +' hidden/> '
+                + (dados.Obj.entidades[0].Ativo ? 'SIM' : 'NÃO') + '</td>' +
                 '<td>' +
-                '<a class="btn btn-primary btn-alterar" role="button" style="margin-left: 3px";> <i class="glyphicon glyphicon-pencil"> Alterar </i> </a>' +
-                '<a class="btn btn-danger btn-excluir" role="button" > <i class="glyphicon glyphicon-trash"> Excluir </i> </a>' +
+
+                '<a class="btn btn-primary btn-alterar" role="button" style="margin-right: 3px"> <i class="glyphicon glyphicon-pencil"> Alterar </i> </a>'+
+                '<a class="btn btn-danger btn-excluir" role="button"> <i class="glyphicon glyphicon-trash"> Excluir </i> </a>' +
+
                 '</td>' +
                 '</tr>';
 
             return retorno;
         }
-    
+
     $(document).on('click', '#btn_incluir', function () {
 
         exibir_form({ Id: 0, Nome: '', Ativo: false });
     })
         .on('click', '.btn-alterar', function () {
 
+            //document.getElementById("cbx_ativo").checked = $(this).closest('tr').find('td[data-check]').data('check');
             //Var é a declaração de variaveis, e todas são separadas por virgula
-            var btn = $(this),
-
+                
+                var btn = $(this),
+                
                 //Dentro do seu grid tem um preenchimento de id de variavel
                 //Para acessar o id preenchido no grid com javascript
                 // a atribuição de 'btn' é um objeto jQuery com métodos que o jQuery disponibiliza
                 //Em seguida o Btn é acessado com closest para retornar o primeiro acesso de um elemento(o mais proximo)
-                //No caso abaixo é acessado o Tr como elemento ais proximo, e sem seguida é acessado o atributo com attr('data-id')
+                //No caso abaixo é acessado o Tr como elemento mais proximo, e em seguida é acessado o atributo com attr('data-id')
                 //Apos acessa o elemento mais proximo vc acessa seua atributo com attr('data-id')
                 id = btn.closest('tr').attr('data-id'),
+                
+                Nome = btn.closest('tr').find('td[data-nome]').data('nome')
+                
+                //btn é o objeto passado como parametro no This
+                //closest acessa o elemento passado e retorna os objetos deste elemento mais proximos a ele
+                //Find procura o elemento pelo identificador unico ou pode ser uma classe ou o name(variavel)
+                //toLowerCase converte o retorno do tipo String para que todas as letras fiquem minusculas
+                // === "true" compara se o elemento de retorno é true, caso seja retorna true se não retorna false
+                CheckBox = (btn.closest('tr').find('#checkedativo').val().toLowerCase() === "true")
+                
                 url = '@Url.Action("RecuperarGrupoProduto","Cadastro")',
-                param = { 'id': id };
+                    console.log(btn.val)
 
-            $.post(url, param, function (response) {
-                if (response) {
-                    exibir_form(response)
-                }
-            });
+
+                param = {
+                    'id': id,
+                    'Nome': Nome,
+                    'Ativo': CheckBox
+                };
+
+            exibir_form(param)
+
+            //$.post(url, add_anti_forgery_token(param), function (response) {
+            //    if (response) {
+            //        exibir_form(response)
+            //    }
+            //});
         })
 
         .on('click', '.btn-excluir', function () {
             var btn = $(this),
                 tr = btn.closest('tr'),
                 id = tr.attr('data-id'),
+                Nome = $(this).closest('tr').find('td[data-nome]').data('nome'),
+
+                    //$("#Nome").val(),
+                CheckBox = $(this).closest('tr').find('td[data-check]').data('check') //$('#cbx_ativo').prop('checked'),
                 url = '@Url.Action("ExcluirGrupoProduto","Cadastro")',
-                param = { 'id': id };
+                param = {
+                    'id': id,
+                    'Nome': Nome,
+                    'Ativo': CheckBox
+                };
 
             bootbox.confirm({
                 size: "small",
                 message: "Are you sure?",
                 callback: function (result) {
                     if (result) {
-                        bootbox.alert("Item Excluido")
 
-                        $.post(url, param, function (response) {
+                        $.post(url, add_anti_forgery_token(param), function (response) {
                             //Quando você encontrar a resposta o retorno do post ele executa a linha dentro do If
-                            if (response) {
+                            //acessa a propriedades em sequencia e retorna o valor de call para validar e remover a linha
+                            var teste = parseInt(response[0].valueOf.__proto__.call.length)
+                            if (teste > 0) {
                                 tr.remove();
+                                bootbox.alert("Item Excluido")
                             }
                         });
                     }
@@ -259,8 +290,8 @@
         //Este evento de botão é de dentro do modal, quando o usuário clicar no botão confirmar
         .on('click', '#btn_confirmar', function () {
 
-                 //Nesta requisição é passado a Url do controller requisitado utilizando razor
-                 //Seu tipo é definido com Post para enviar dos dados e retorno das informações
+                //Nesta requisição é passado a Url do controller requisitado utilizando razor
+                //Seu tipo é definido com Post para enviar dos dados e retorno das informações
                 //Dentro da construção de objetos de data estão:
                 //Id: que é preenchido com os dados do list assim que o modal é chamado, porém, seu valor é resgatado com
                 //como é visto abaixo para que seja usado de parametro quando for enviado a requisição post
@@ -276,101 +307,119 @@
                 Ativo: $('#cbx_ativo').prop('checked')
             };
 
+            if (param.Id > 0) {
+               let  url = '@Url.Action("AlterarGrupoProduto", "Cadastro")'
+                $.post(url, add_anti_forgery_token(param), function (response) {
+                    if (!$.isEmptyObject(response.Obj)) {
+
+                     //essa linda corresponde ao objeto que devera ser manipulado, em especifico ao TD
+                     //sem seguida com a propriedade .html vc inputa o valor do objeto que deseja passar
+                     //é importante se atentar ao nome dos atributos no objeto para que seja identificado qual
+                     //elemento será jogado no campo para alteração
+
+                    var linha = $('#grid_cadastro').find('tr[data-id=' + response.Obj.entidades[0].Id + ']').find('td');
+                    var texto = response.Obj.entidades[0].Ativo ? ' SIM' : ' NÂO';
+
+                    linha
+                        //aqui você mexe na primeira coluna que é do nome
+                        .eq(0).html(param.Nome).end()
+
+                    //atribuiu na tabela o valor do check retornado do banco apos a confirmação do salvamento
+                    //Na minha é procurado o checkBox com find
+                    //prop com parametro 'checked' acessa os
+
+                    //linha.find('#checkedativo').prop('checked', response.Obj.entidades[0].Ativo);
+                        .eq(1).html('').end()
+                        .eq(1).append('<input id="checkedativo" name="checkedativo" type="checkbox" value="' + response.Obj.entidades[0].Ativo + '" hidden />').end()
+                        .eq(1).append(texto);
+                      linha.find('#checkedativo').prop('checked', response.Obj.entidades[0].Ativo);
+                    //.eq(1).html('').end()
+                        //aqui você atualiza a segunda coluna que é a de ativo
+                        //.eq(1).append('<input id="checkedativo" name="checkedativo" type="checkbox" value="true" />');
+                        //.eq(1).html(param.Ativo ? 'SIM' : 'NÃO');
+
+                    }
+                    else if (response.Mensagens.length > 0) {
+                        //Quando você faz um append, voc~e está acrecentando um elemento dentro
+                        //o que esta sendo passado como parametro são varias mensagens dentro do atributo mensagem
+                        $('#msg_mensagem_aviso').html(formatar_mensagem_aviso(response.Mensagens));
+                        $('#msg_aviso').show();
+                        $('#msg_mensagem_aviso').show();
+                        $('#msg_erro').hide();
+                    };
+
+                    if ($.isEmptyObject(response.Mensagens)) {
+                        $('#msg_mensagem_aviso').hide();
+                        $('#msg_aviso').hide();
+                        $('#msg_mensagem_aviso').hide();
+                        $('#msg_erro').hide();
+
+                        $('#modal_cadastro').parents('.bootbox').modal('hide');
+                    };
+                  
+
+            });
+                               
+               
+
+            }
+            else
+            {
+              
             $.ajax({
                 url: '@Url.Action("SalvarGrupoProduto", "Cadastro")',
                 type: 'POST',
-                data: param,
+                data: add_anti_forgery_token(param),
                 success: function (data) {
 
                     //Caso o retorno do backend seja "OK" na validação de mensagem
                     //ele executado o proximo bloco de código conforme abaixo
-                    if (data.Resultado == "OK") {
-
-                        if (param.Id == 0) {
+                    //if (data.Obj.length > 0) {
+                    if(!$.isEmptyObject(data.Obj))
+                    {
+                            //  if (param.Id == 0) {
                             param.Id = data.idSalvo;
                             var table = $('#grid_cadastro').find('tbody');
                             var linha = criar_linha_grid(data);
                             table.append(linha);
-                        } else {
-                            //essa linda corresponde ao objeto que devera ser manipulado, em especifico ao TD
-                            //sem seguida com a propriedade .html vc inputa o valor do objeto que deseja passar
-                            //é importante se atentar ao nome dos atributos no objeto para que seja identificado qual
-                            //elemento será jogado no campo para alteração
-                            var linha = $('#grid_cadastro').find('tr[data-id=' + param.Id + ']').find('td');
-
-                            linha
-                                //aqui você mexe na primeira coluna que é do nome
-                                .eq(0).html(param.Nome).end()
-                                //aqui você atualiza a segunda coluna que é a de ativo
-                                .eq(1).html(param.Ativo ? 'SIM' : 'NÃO');
-                        }
-                        $('#modal_cadastro').parents('.bootbox').modal('hide');
+                      
                     }
-                    else if(data.Resultado == "ERROR"){
-                        $('#msg_aviso').hide();
-                        $('#msg_mensagem_aviso').hide();
-                        $('#msg_erro').show();
-                    }
-                    else if (data.Resultado == "AVISO") {
+                    else if (!$.isEmptyObject(data.Mensagens)) {
                         //Quando você faz um append, voc~e está acrecentando um elemento dentro
                         //o que esta sendo passado como parametro são varias mensagens dentro do atributo mensagem
                         $('#msg_mensagem_aviso').html(formatar_mensagem_aviso(data.Mensagens));
                         $('#msg_aviso').show();
                         $('#msg_mensagem_aviso').show();
                         $('#msg_erro').hide();
-                    }                    
-                }              
-            });
+                    };
 
+                    if ($.isEmptyObject(data.Mensagens)) {
+                        $('#msg_mensagem_aviso').hide();
+                        $('#msg_aviso').hide();
+                        $('#msg_mensagem_aviso').hide();
+                        $('#msg_erro').hide();
 
-             @*var btn = $(this),
-                url = '@Url.Action("SalvarGrupoProduto","Cadastro")',
-                //param se tranforma em um objeto que será passado como parametro na requisição de post
-                //Dentro da construção de objetos estão:
-                //Id: que é preenchido com os dados do list assim que o modal é chamado, porém, seu valor é resgatado com
-                //como é visto abaixo para que seja usado de parametro quando for enviado a requisição post
-                //Nome: parametro nome é prenchido com chamado do modal e tem seu valor resgatado para usado como
-                //parametro para requisição post
-                //Ativo: assim como os parametro anteriores seu valor é trazido do list em tela, e preenchido na
-                //chamada do modal e quando é clicado no botão confirmar é enviado requisão psoto junto com outros valores
-                 param = {
-                     Id: $('#id_cadastro').val(),
-                     Nome: $('#txt_nome').val(),
-                     Ativo: $('#cbx_ativo').prop('checked')
-                };
-            //Neste metodo post é preenchido como parametro a url de requisição contendo
-            //Controller e a action a ser usada, e também o objeto parametro
-            //Caso haja sucesso
-            $.post(url, param, function (response) {
-                if (response) {
-                    if (param.id == 0) {
-                        ////Aqui você pega todo conteudo da tabela
-                        var table = $('#grid_cadastro').find('tbody');
-
-                        //esse metodo retornar a estrutura uma linha para ser adicionada com
-                        //base no response
-
-                        var linha = criar_linha_grid(response);
-                        //Aqui é adicionado o a linha dentro da tabela
-                        table.append(linha);
-                    }
+                        $('#modal_cadastro').parents('.bootbox').modal('hide');
+                    };
                 }
-            });*@
+            });
+                //$('#modal_cadastro').parents('.bootbox').modal('hide');
+            }          
 
         });
 
         //essa função recebe o retorno de parametro do backend como um objeto anonimo
         //Então a função formata para o modelo lista em html as mensagne em json
-        //Como essa função recebe uma lista de string de mensagem do backend, é preciso 
-        //um For para ler todas as mensagens percorrendo a lista passado por parametro 
+        //Como essa função recebe uma lista de string de mensagem do backend, é preciso
+        //um For para ler todas as mensagens percorrendo a lista passado por parametro
         function formatar_mensagem_aviso(Mensagens) {
             var ret = '';
 
             for (var i = 0; i < Mensagens.length; i++) {
-                ret = '<li>' + Mensagens[i] + '</li>'; 
+                ret = '<li>' + Mensagens[i] + '</li>';
             }
             return '<ul>' + ret + '<ul>';
         }
-    </script>
+</script>
 
 }
