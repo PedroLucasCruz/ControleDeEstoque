@@ -7,38 +7,22 @@
 
 
         $.ajax({
-            url: '/Usuario/UsuariosListar',  //URL solicitada
+            url: '/Usuario/UsuariosListar',
+            type: 'POST', //URL solicitada
             success: function (data) { //O HTML é retornado em 'data'
-                alert(data); //Se sucesso um alert com o conteúdo retornado pela URL solicitada será exibido.
-                console.log(data.Obj);  
-                alert("entrou");
+
+                gView.RefreshTable(data.Obj);
+
             }
         });
-
-        //var ajax = new XMLHttpRequest();
-        //// Seta tipo de requisição e URL com os parâmetros
-        //ajax.open("GET", "/Usuario/UsuariosListar", true);
-        //// Envia a requisição
-        //ajax.send();
-        //// Cria um evento para receber o retorno.
-        //ajax.onreadystatechange = function () {
-
-        //    // Caso o state seja 4 e o http.status for 200, é porque a requisiçõe deu certo.
-        //    if (ajax.readyState == 4 && ajax.status == 200) {
-
-        //        var data = ajax.responseText;
-
-        //        // Retorno do Ajax
-        //        console.log(data);
-        //    }
-        //}
-
-
-        if (vResponse.Status) {
-            gVariable.ListTabela = vResponse.Response;
-            gView.RefreshTable();
-        }
     }
+
+
+        //if (vResponse.Status) {
+        //    gVariable.ListTabela = vResponse.Response;
+        //    gView.RefreshTable();
+        //}
+    
     //Exempllo de outro objeto implementado
     //Delete: (pID) => {
 
@@ -57,9 +41,9 @@
 
 var gView = {
 
-    RefreshTable: () => {
+    RefreshTable: (data) => {
     
-        var linha = alimentarTabela(gVariable.ListTabela);
+        var linha = criarLinhaTabelaUsuario(data);
         var table = $('#grid_usuario').find('tbody');
         table.append(linha);
     },
@@ -67,7 +51,6 @@ var gView = {
     RemoverClassificacao: (pID) => {
 
         ConfirmDelete('Deseja excluir a Classificação ?', gService.Delete, pID);
-
     },
 
     Forms: {
@@ -89,6 +72,17 @@ var gView = {
         CleanValue: () => {
 
             gView.Fields.Value.Classificacao() = ''
+        },
+
+        LoadTableComplete: () => {
+            var tabela = document.createElement("table");
+            var cabecalho = document.createElement("thead");
+            var corpo = document.createElement("tbody");
+
+            tabela.appendChild(cabecalho);
+            tabela.appendChild(corpo);
+
+            document.getElementById("test").appendChild(tabela);
         }
     }
 
@@ -100,22 +94,26 @@ function criarLinhaTabelaUsuario(ListTabela) {
 
     for (var i = 0; i < ListTabela.length; i++) {
        retorno = retorno + '<tr>'
-            + '<th scope = "row" >'+ 1 +'</th>'
-            + '<td>'+Mark+'</td>'
-            + '<td>'+Otto+'</td>'
-            + '<td>'+fat+'</td>'
-            + '<td>'+Básico+'</td>'
+           + '<th scope = "row" data-id=' + ListTabela[i].Id + '>' + ListTabela[i].Id +'</th>'
+           + '<td>' + ListTabela[i].Nome+'</td>'
+           + '<td>' + ListTabela[i].SobreNome+'</td>'
+            + '<td>'+"teste 1"+'</td>'
+            + '<td>'+"teste 2"+'</td>'
             + '<td>'
             + '<a class="btn btn-warning" role="button">'
             + '<i class="glyphicon glyphicon-pencil" >  </i >'
             + '</a>'
-            + '<a class="btn btn-danger btn-excluir" role="button">'
+            + '<a class="btn btn-danger style="margin-right: 3px" btn-excluir" role="button">'
             + '<i class="glyphicon glyphicon-trash" >  </i >'
             + '</a>'
             + '</td>'
             + '</tr >';
     }  
     return retorno;
+}
+
+function linhaTabela(){
+
 }
 
 var gVariable = {

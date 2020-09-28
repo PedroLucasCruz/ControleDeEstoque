@@ -18,6 +18,7 @@ namespace ControleEstoque.Controllers
         }
 
         public ActionResult UsuariosListar(UsuariosModel usuariosModel)
+        
         {   
             var callback = new Result<UsuariosModel>();
             
@@ -26,7 +27,7 @@ namespace ControleEstoque.Controllers
             return Json(new { Obj = callback.entidades, Mensagens = callback.mensagens });
         }
 
-        public ActionResult UsuariosAlterar(UsuariosModel usuariosModel)
+        public ActionResult UsuarioAlterar(UsuariosModel usuariosModel)
         {           
             var callback = new Result<UsuariosModel>();
 
