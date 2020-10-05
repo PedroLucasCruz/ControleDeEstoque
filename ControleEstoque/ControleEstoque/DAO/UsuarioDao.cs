@@ -145,7 +145,7 @@ namespace ControleEstoque.DAO
                             usuariosModel.Cpf = sqlData[8].ToString();
                             usuariosModel.Rg = sqlData[9].ToString();
                             usuariosModel.DataNascimento = DateTime.Parse(sqlData[10].ToString());
-
+                         
                             result.entidades.Add(usuariosModel);
                             //PropertyInfo info = grupoProdutoModel.GetType().GetProperty("Nome");
                         }
@@ -197,7 +197,7 @@ namespace ControleEstoque.DAO
                             usuariosModel.Cpf = sqlData[8].ToString();
                             usuariosModel.Rg = sqlData[9].ToString();
                             usuariosModel.DataNascimento = DateTime.Parse(sqlData[10].ToString());
-
+                            var teste = (String.Format("{0:d/M/yyyy HH:mm:ss}", sqlData[10].ToString()));
                             result.entidades.Add(usuariosModel);
                         }
                     }

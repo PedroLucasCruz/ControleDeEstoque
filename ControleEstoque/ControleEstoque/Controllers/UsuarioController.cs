@@ -17,8 +17,7 @@ namespace ControleEstoque.Controllers
             return View();
         }
 
-        public ActionResult UsuariosListar(UsuariosModel usuariosModel)
-        
+        public ActionResult UsuariosListar(UsuariosModel usuariosModel)        
         {   
             var callback = new Result<UsuariosModel>();
             

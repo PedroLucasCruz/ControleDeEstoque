@@ -93,28 +93,68 @@ function criarLinhaTabelaUsuario(ListTabela) {
     var retorno = '';
 
     for (var i = 0; i < ListTabela.length; i++) {
-       retorno = retorno + '<tr>'
-           + '<th scope = "row" data-id=' + ListTabela[i].Id + '>' + ListTabela[i].Id +'</th>'
-           + '<td>' + ListTabela[i].Nome+'</td>'
-           + '<td>' + ListTabela[i].SobreNome+'</td>'
-            + '<td>'+"teste 1"+'</td>'
-            + '<td>'+"teste 2"+'</td>'
+        retorno = retorno + '<tr>'
+            + '<th scope = "row" data-id=' + ListTabela[i].Id + '>' + ListTabela[i].Id + '</th>'
+
+            + '<td>' + ListTabela[i].Nome + '</td>'
+            + '<td>' + ListTabela[i].SobreNome + '</td>'
+            + '<td>' + formatContato(ListTabela, i) +'</td>'
+            + '<td>' + formatarTipoPes(ListTabela, i) + '</td>'
+            + '<td>' + FormatDateHours(ListTabela[i].DataNascimento) + '</td>'
+            
             + '<td>'
-            + '<a class="btn btn-warning" role="button">'
-            + '<i class="glyphicon glyphicon-pencil" >  </i >'
-            + '</a>'
-            + '<a class="btn btn-danger style="margin-right: 3px" btn-excluir" role="button">'
-            + '<i class="glyphicon glyphicon-trash" >  </i >'
-            + '</a>'
+            + '<a class="btn btn-warning" style="margin-right: 3px" role="button">'
+                + '<i class="glyphicon glyphicon-pencil" >  </i >'
+                + '</a>'
+                + '<a class="btn btn-danger  btn-excluir" role="button">'
+                + '<i class="glyphicon glyphicon-trash" >  </i>'
+                + '</a>'
             + '</td>'
-            + '</tr >';
-    }  
+            + '</tr>';
+    }       
     return retorno;
 }
 
-function linhaTabela(){
+function formatContato(data, i){
 
+    if (data[i].Celular.length > 0) {
+        return data[i].Celular;
+    }
+    else {
+      return data[i].Telefone;
+    }
 }
+
+function formatarTipoPes(data, i) {
+
+    if (data[i].Cpf.length > 0 ) {
+        return data[i].Cpf;
+    }
+    else if (data[i].cnpj != undefined) {
+        if (data[i].cnpj.length > 0)
+        return data[i].cnpj;
+    }
+    else if(data[i].Rg.length > 0) {
+        return data[i].Rg;
+    }
+}
+
+function FormatDateHours(paramValue) {
+    var date, day, month, year, hour;
+
+    date = new Date(parseInt(paramValue.substr(6)));
+
+    day = date.getDate().toString().padStart(2, '0');
+    month = (date.getMonth() + 1).toString().padStart(2, '0')
+    year = date.getFullYear();
+
+    hour = date.getHours().toString().padStart(2, '0');
+    min = date.getMinutes().toString().padStart(2, '0');
+    secs = date.getSeconds().toString().padStart(2, '0');
+
+    return day + '/' + month + '/' + year + ' ' + hour + ':' + min + ':' + secs;
+}
+
 
 var gVariable = {
 

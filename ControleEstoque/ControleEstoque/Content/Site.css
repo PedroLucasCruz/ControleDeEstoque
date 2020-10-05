@@ -74,7 +74,11 @@ display: none;
 /*-----INICIOS------CADASTRO DE USUARIO--------------------*/
 
 #grid_usuario > thead > tr th:nth-child(6) {
-    width: 102px;
+    width: 150px;
+}
+
+#grid_usuario > thead > tr th:nth-child(7) {
+    width: 100px;
 }
 
 #grid_usuario > tbody > tr td {
