@@ -18,7 +18,7 @@ namespace ControleEstoque.Models
     //Como uma classe abstrata não serve pra ser estanciada você deve definir 
     //a classe com o a anotação abstract para que ela não seja estanciada
     public abstract class DAOabstract<T> : ICrud<T> where T : AbstractEntidadeDominio
-    {
+    {   
         //Variavel "conn" com o tipo SqlConnection recebe a string de conexão
         protected SqlConnection conn;
         //Variavel que vai receber a string de conexão como parametro 
@@ -121,7 +121,12 @@ namespace ControleEstoque.Models
         public abstract Result<T> Excluir(T entidade);
         public abstract Result<T> GetById(T entidade);
         public abstract Result<T> Listar();
-        public abstract Result<T> Salvar(T entidade);        
-       
+        public abstract Result<T> Salvar(T entidade);
+
+        public V CheckNull<V>(object obj)
+        {
+            return (obj == DBNull.Value ? default(V) : (V)obj);
+        }
+
     }
 }

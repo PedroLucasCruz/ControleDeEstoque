@@ -93,27 +93,52 @@ function criarLinhaTabelaUsuario(ListTabela) {
     var retorno = '';
 
     for (var i = 0; i < ListTabela.length; i++) {
-        retorno = retorno + '<tr>'
-            + '<th scope = "row" data-id=' + ListTabela[i].Id + '>' + ListTabela[i].Id + '</th>'
+        retorno += strEstruturaTabela(ListTabela, i);
+        //retorno = retorno + '<tr>'
+        //    + '<th scope = "row" data-id=' + ListTabela[i].Id + '>' + ListTabela[i].Id + '</th>'
 
-            + '<td>' + ListTabela[i].Nome + '</td>'
-            + '<td>' + ListTabela[i].SobreNome + '</td>'
-            + '<td>' + formatContato(ListTabela, i) +'</td>'
-            + '<td>' + formatarTipoPes(ListTabela, i) + '</td>'
-            + '<td>' + FormatDateHours(ListTabela[i].DataNascimento) + '</td>'
+        //    + '<td>' + ListTabela[i].Nome + '</td>'
+        //    + '<td>' + ListTabela[i].SobreNome + '</td>'
+        //    + '<td>' + formatContato(ListTabela, i) +'</td>'
+        //    + '<td>' + formatarTipoPes(ListTabela, i) + '</td>'
+        //    + '<td>' + FormatDateHours(ListTabela[i].DataNascimento) + '</td>'
             
-            + '<td>'
-            + '<a class="btn btn-warning" style="margin-right: 3px" role="button">'
-                + '<i class="glyphicon glyphicon-pencil" >  </i >'
-                + '</a>'
-                + '<a class="btn btn-danger  btn-excluir" role="button">'
-                + '<i class="glyphicon glyphicon-trash" >  </i>'
-                + '</a>'
-            + '</td>'
-            + '</tr>';
+        //    + '<td>'
+        //    + '<a class="btn btn-warning" style="margin-right: 3px" role="button">'
+        //        + '<i class="glyphicon glyphicon-pencil" >  </i >'
+        //        + '</a>'
+        //        + '<a class="btn btn-danger  btn-excluir" role="button">'
+        //        + '<i class="glyphicon glyphicon-trash" >  </i>'
+        //        + '</a>'
+        //    + '</td>'
+        //    + '</tr>';
     }       
     return retorno;
 }
+
+//caso você queira gerar apenas uma linha desta estrutura basta passar o objeto para preencher como parametro e o indice 0
+function strEstruturaTabela(ListTabela, i) {
+    var retorno = retorno + '<tr>'
+        + '<th scope = "row" data-id=' + ListTabela[i].Id + '>' + ListTabela[i].Id + '</th>'
+
+        + '<td>' + ListTabela[i].Nome + '</td>'
+        + '<td>' + ListTabela[i].SobreNome + '</td>'
+        + '<td>' + formatContato(ListTabela, i) + '</td>'
+        + '<td>' + formatarTipoPes(ListTabela, i) + '</td>'
+        + '<td>' + FormatDateHours(ListTabela[i].DataNascimento) + '</td>'
+
+        + '<td>'
+        + '<a class="btn btn-warning" style="margin-right: 3px" role="button">'
+        + '<i class="glyphicon glyphicon-pencil" >  </i >'
+        + '</a>'
+        + '<a class="btn btn-danger  btn-excluir" role="button">'
+        + '<i class="glyphicon glyphicon-trash" >  </i>'
+        + '</a>'
+        + '</td>'
+        + '</tr>';
+    return retorno;
+} 
+
 
 function formatContato(data, i){
 

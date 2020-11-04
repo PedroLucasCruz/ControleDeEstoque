@@ -66,8 +66,8 @@ namespace ControleEstoque.Controllers
             return Json(ListaGrupoProduto.Find(x => x.Id == id));
         }
 
-        [HttpPost]
-        [Authorize]
+       [HttpPost]
+       [Authorize]
        [ValidateAntiForgeryToken]
         public ActionResult ExcluirGrupoProduto(GrupoProdutoModel entidade)
         {

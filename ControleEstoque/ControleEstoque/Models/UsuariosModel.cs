@@ -17,6 +17,6 @@ namespace ControleEstoque.Models
         public String Cpf { get; set; }
         public String Rg { get; set; }
         public DateTime DataNascimento { get; set; }
-        public int IdEndereco {get; set;}
+        public int ? IdEndereco  {get; set;}
     }
 }

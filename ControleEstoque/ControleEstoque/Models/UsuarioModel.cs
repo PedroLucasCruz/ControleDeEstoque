@@ -31,7 +31,7 @@ namespace ControleEstoque.Models
             //String completa fica da seguinte forma a baixo
             //"Dara Source=localhost;Initial Catalog=controle-estoque; User id=admin;Passaword=123";
             #endregion
-            conexao.ConnectionString = @"Data Source=DESKTOP-5U7PVKK;Initial Catalog=controle_estoque;User Id=Controleestoque;Password=controle55";
+            conexao.ConnectionString = @"Data Source=DESKTOP-5U7PVKK\MSSQLSERVER05;Initial Catalog=Controle_estoque;User Id=Controleestoque;Password=controle55";
             #region
             //Abrir a conexão com o banco de dados por padrão toda vez que for usada na aplicação
             #endregion
@@ -52,7 +52,9 @@ namespace ControleEstoque.Models
             //Nessa linha você retorna o a quantidade de linhas encontradas no banco de dados de acordo com os parametros informados
             #endregion
             comando.CommandText = string.Format("Select count(*) from Logins where Login = @login and Senha = @Senha ");
-            
+
+            var senhacript = Cryptography.HashMd5(Senha);
+
             comando.Parameters.Add("@login", SqlDbType.VarChar).Value = Login;
             comando.Parameters.Add("@Senha", SqlDbType.VarChar).Value = Cryptography.HashMd5(Senha);
             

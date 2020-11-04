@@ -187,7 +187,7 @@ namespace ControleEstoque.DAO
                             UsuariosModel usuariosModel = new UsuariosModel();
 
                             usuariosModel.Id = int.Parse(sqlData[0].ToString());
-                            usuariosModel.IdEndereco = int.Parse(sqlData[1].ToString());
+                            usuariosModel.IdEndereco = CheckNull<int>(sqlData[1]);  //int.Parse(sqlData[1].ToString());
                             usuariosModel.Nome = sqlData[2].ToString();
                             usuariosModel.SobreNome = sqlData[3].ToString();
                             usuariosModel.Email = sqlData[4].ToString();
