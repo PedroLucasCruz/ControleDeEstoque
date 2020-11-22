@@ -41,7 +41,7 @@ namespace ControleEstoque.Controllers
             return Json(new { Obj = callback.entidades, Mensagens = callback.mensagens });
         }
 
-        public ActionResult UsuarioSalvar(UsuariosModel usuarioModel)
+        public ActionResult UsuarioSalvar(UsuariosModel obj)
         {         
 
             var callback = new Result<UsuariosModel>();
@@ -52,7 +52,7 @@ namespace ControleEstoque.Controllers
             }
             else
             {
-                callback.entidades = new UsuarioB(HttpContext.Request).Salvar(usuarioModel)?.entidades;
+                callback.entidades = new UsuarioB(HttpContext.Request).Salvar(obj)?.entidades;
             }
             return Json(new { Obj = callback.entidades, Mensagens = callback.mensagens });
         }

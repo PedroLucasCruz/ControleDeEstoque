@@ -72,7 +72,7 @@
 
                         <div class="form-group col-md-6">
                             <label for="inputNome">Nome</label>
-                            <input type="text" class="form-control" id="inputText" placeholder="Nome">
+                            <input type="text" class="form-control" id="inputNome" placeholder="Nome">
                         </div>
 
                         <div class="form-group col-md-6">
@@ -104,10 +104,10 @@
                             <label for="inputCpf">CPF</label>
                             <input type="text" class="form-control" id="inputCpf" placeholder="CPF">
                         </div>
-
+                    
                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
                             <label for="InputRg">RG</label>
-                            <input type="text" class="form-control" id="InputRg" placeholder="RG">
+                            <input type="text" class="form-control" id="inputRg" placeholder="RG">
                         </div>
 
                         <div class="form-group col-lg-6 col-sm-6 col-md-6">
@@ -121,8 +121,8 @@
 
                 <div class="modal-footer">
                     
-                    <button type="button"class="btn btn-danger" data-dismiss="modal"><i class="glyphicon glyphicon-remove">  </i></button>
-                    <button type="button" class="btn btn-primary"> <i class="glyphicon glyphicon-ok">  </i></button>
+                    <button type="button"class="btn btn-danger" data-dismiss="modal" ><i class="glyphicon glyphicon-remove">  </i></button>
+                    <button type="button" class="btn btn-primary" onclick="enviarDadosBack(this)"> <i class="glyphicon glyphicon-ok">  </i></button>
                 </div>
 
             </div>
@@ -187,7 +187,8 @@
 
                         <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
                             <label for="inputCidade">Cidade: </label>
-                            <input type="text" class="form-control" id="inputCidade" placeholder="Cidade">
+                            <input type="text" class="form-control" id="inputCidade" placeholder="Cidade" required>
+                            <span class="error" ></span>
                         </div>
 
                         <div class="form-group col-sm-6 col-md-6 col-lg-6 ">
